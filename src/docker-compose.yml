@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
+  binance-backgroundtasks:
+    image: ${REGISTRY:-radiksalakhov}binancebackgroundtasks
+    build:
+      context: .
+      dockerfile: Services/Binance/Binance.BackgroundTasks/Dockerfile
+    depends_on:
+      - rabbitmq
+
+  priceticker-signalrhub:
+    image: ${REGISTRY:-radiksalakhov}pricetickersignalrhub
+    build:
+      context: .
+      dockerfile: Services/PriceTicker/priceticker.SignalrHub/Dockerfile
+    depends_on:
+      - rabbitmq 
+

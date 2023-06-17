@@ -1,5 +1,7 @@
+using Binance.BackgroundTasks.IntegrationEvents;
 using Binance.Domain.Common;
 using Binance.Domain.Services;
+using EventBus.Abstraction;
 
 namespace Binance.BackgroundTasks
 {
@@ -7,11 +9,14 @@ namespace Binance.BackgroundTasks
     {
         private readonly ILogger<Worker> _logger;
 
+        private readonly IEventBus _eventBus;
+
         private readonly IBinancePriceTickerService _binancePriceTickerService;
 
-        public Worker(ILogger<Worker> logger, IBinancePriceTickerService binancePriceTickerService)
+        public Worker(ILogger<Worker> logger, IEventBus eventBus, IBinancePriceTickerService binancePriceTickerService)
         {
             _logger = logger;
+            _eventBus = eventBus;
             _binancePriceTickerService = binancePriceTickerService;
         }
 
@@ -19,11 +24,24 @@ namespace Binance.BackgroundTasks
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                var serverTime = await _binancePriceTickerService.GetServerTime();
+                try
+                {
+                    var serverTime = await _binancePriceTickerService.GetServerTime();
 
-                var priceTickers = await _binancePriceTickerService.GetPriceTickers(CryptoAsset.GetAll(skipUSDT: true));
+                    var priceTickers = await _binancePriceTickerService.GetPriceTickers(CryptoAsset.GetAll(skipUSDT: true));
 
-                await Task.Delay(500);
+                    foreach (var priceTicker in priceTickers)
+                    {
+                        var integrationEvent = new BinanceCryptoAssetPriceTickerIntegrationEvent(priceTicker.CryptoAsset, priceTicker.BaseCryptoAsset, priceTicker.Price);
+                        _eventBus.Publish(integrationEvent);
+                    }
+
+                    await Task.Delay(500);
+                }
+                catch (Exception exp)
+                {
+                    _logger.LogError(exp, string.Empty);
+                }
             }
         }
     }

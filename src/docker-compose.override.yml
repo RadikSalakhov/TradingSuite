@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  rabbitmq:
+    ports:
+      - "15672:15672"
+      - "5672:5672"      
+
+  binance-backgroundtasks:
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  priceticker-signalrhub:
+    ports:
+      - "5112:80"
