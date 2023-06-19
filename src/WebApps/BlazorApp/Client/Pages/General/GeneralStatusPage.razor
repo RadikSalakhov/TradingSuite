@@ -1,0 +1,40 @@
+﻿@using BlazorApp.Client.Services;
+
+@implements IDisposable
+
+@inject IClientCacheService ClientCacheService
+
+<div class="ts-container">
+    <div class="ts-item-environment">
+        PRD
+    </div>
+    <div class="ts-item-time">
+        @ClientCacheService.GetServerTime().ToString("HH:mm:ss")
+    </div>
+    <div class="ts-item-usdt-info">
+        500 / 5000
+    </div>
+    <div class="ts-item-uncommited-pnl">
+        -100
+    </div>
+</div>
+
+@code{
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        ClientCacheService.ServerTimeUpdated += client_Updated;
+    }
+
+    public void Dispose()
+    {
+        ClientCacheService.ServerTimeUpdated -= client_Updated;
+    }
+
+    private async Task client_Updated()
+    {
+        await InvokeAsync(StateHasChanged);
+    }
+}

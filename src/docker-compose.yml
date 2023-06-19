@@ -5,7 +5,7 @@ services:
     image: rabbitmq:3-management-alpine
 
   binance-backgroundtasks:
-    image: ${REGISTRY:-radiksalakhov}binancebackgroundtasks
+    image: ${REGISTRY:-radiksalakhov}tradingsuite-binancebackgroundtasks
     build:
       context: .
       dockerfile: Services/Binance/Binance.BackgroundTasks/Dockerfile
@@ -13,10 +13,16 @@ services:
       - rabbitmq
 
   priceticker-signalrhub:
-    image: ${REGISTRY:-radiksalakhov}pricetickersignalrhub
+    image: ${REGISTRY:-radiksalakhov}tradingsuite-pricetickersignalrhub
     build:
       context: .
       dockerfile: Services/PriceTicker/priceticker.SignalrHub/Dockerfile
     depends_on:
-      - rabbitmq 
+      - rabbitmq
+
+  blazorapp:
+    image: ${REGISTRY:-radiksalakhov}tradingsuite-blazorapp
+    build:
+      context: .
+      dockerfile: WebApps/BlazorApp/Server/Dockerfile    
 

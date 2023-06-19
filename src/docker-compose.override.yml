@@ -14,4 +14,14 @@ services:
 
   priceticker-signalrhub:
     ports:
-      - "5112:80"
+      - "6090:80"      
+
+  blazorapp:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80;https://0.0.0.0:443
+      - SignalrHubUrl=http://localhost:6090/hub
+    ports:
+      - "6080:80"
+      - "6081:443"
+

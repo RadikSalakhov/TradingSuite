@@ -1,5 +1,6 @@
 ﻿using EventBus.Abstraction;
 using Microsoft.AspNetCore.SignalR;
+using PriceTicker.SignalrHub.DTO;
 using PriceTicker.SignalrHub.IntegrationEvents;
 
 namespace PriceTicker.SignalrHub.IntegrationEventHandlers
@@ -23,7 +24,9 @@ namespace PriceTicker.SignalrHub.IntegrationEventHandlers
             {
                 _logger.LogInformation("Handling integration event: {IntegrationEventId} - ({@IntegrationEvent})", integrationEvent.Id, integrationEvent);
 
-                await _hubContext.Clients.All.SendAsync("PriceTicker", integrationEvent);
+                var dto = new CryptoAssetPriceDTO(integrationEvent.CryptoAsset, integrationEvent.BaseCryptoAsset, integrationEvent.Price);
+
+                await _hubContext.Clients.All.SendAsync(nameof(CryptoAssetPriceDTO), dto);
             }
         }
     }
