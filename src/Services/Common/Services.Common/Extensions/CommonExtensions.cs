@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
+using Services.Common.WorkerHandlers;
 
 namespace Services.Common.Extensions
 {
@@ -13,6 +14,8 @@ namespace Services.Common.Extensions
         public static IServiceCollection AddServiceDefaults(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddEventBus(configuration);
+
+            services.AddWorkerHandler();
 
             return services;
         }
@@ -59,6 +62,13 @@ namespace Services.Common.Extensions
             }
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
+            return services;
+        }
+
+        public static IServiceCollection AddWorkerHandler(this IServiceCollection services)
+        {
+            services.AddSingleton<IWorkerHandler, WorkerHandler>();
+
             return services;
         }
     }

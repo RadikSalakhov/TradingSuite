@@ -13,6 +13,7 @@ builder.Services.AddServiceDefaults(builder.Configuration);
 builder.Services.AddSignalR();
 
 builder.Services.AddSingleton<IIntegrationEventHandler<BinanceCryptoAssetPriceTickerIntegrationEvent>, BinanceCryptoAssetPriceTickerIntegrationEventHandler>();
+builder.Services.AddSingleton<IIntegrationEventHandler<BinanceServerTimeIntegrationEvent>, BinanceServerTimeIntegrationEventHandler>();
 
 builder.Services.AddCors(options =>
 {
@@ -34,5 +35,6 @@ app.MapHub<NotificationsHub>("/hub");
 var eventBus = app.Services.GetRequiredService<IEventBus>();
 
 eventBus.Subscribe<BinanceCryptoAssetPriceTickerIntegrationEvent, IIntegrationEventHandler<BinanceCryptoAssetPriceTickerIntegrationEvent>>();
+eventBus.Subscribe<BinanceServerTimeIntegrationEvent, IIntegrationEventHandler<BinanceServerTimeIntegrationEvent>>();
 
 await app.RunAsync();

@@ -59,7 +59,7 @@ namespace BlazorApp.Client.Hubs
             _hubConnection.Reconnecting += hubConnection_Reconnecting;
             _hubConnection.Reconnected += hubConnection_Reconnected;
 
-            _hubConnection.On<CryptoAssetPriceDTO>(nameof(CryptoAssetPriceDTO), dto => test(dto));
+            _hubConnection.On<ServerTimeDTO>(nameof(ServerTimeDTO), dto => _clientCacheService.UpdateServerTime(dto.ServerTime));
 
             //_hubConnection.On<IEnumerable<AssetEntity>>(TradingHubMessage.Assets, entities => TradingServiceClient.Cache.UpdateAssets(entities));
 
@@ -70,11 +70,6 @@ namespace BlazorApp.Client.Hubs
             //_hubConnection.On<IEnumerable<EmaCrossEntity>>(TradingHubMessage.IndicatorEmaCross, entities => TradingServiceClient.Cache.UpdateEmaCrossEntites(entities));
 
             await _hubConnection.StartAsync();
-        }
-
-        private void test(CryptoAssetPriceDTO dto)
-        {
-            _clientCacheService.UpdateServerTime(DateTime.UtcNow);
         }
 
         private async Task hubConnection_Closed(Exception? arg)
