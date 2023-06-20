@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pages\Assets\AssetsMainPage.razor.css" />
     <None Remove="Pages\General\GeneralStatusPage.razor.css" />
     <None Remove="Pages\Index.razor.css" />
   </ItemGroup>

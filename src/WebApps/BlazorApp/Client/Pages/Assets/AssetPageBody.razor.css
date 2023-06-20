@@ -1,0 +1,261 @@
+﻿.ts-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    width: 100%;
+    height: 100%;
+    justify-items: center;
+    align-items: center;
+    column-gap: 1px;
+    row-gap: 1px;
+}
+
+.ts-item {
+    width: 100%;
+    height: 100%;
+}
+
+/*slope-short*/
+.ts-item-slope-short-a {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    background-color: var(--background-color);
+}
+
+.ts-item-slope-short-b {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    background-color: var(--background-color);
+}
+
+.ts-item-slope-short-c {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    background-color: var(--background-color);
+}
+
+.ts-item-slope-short-d {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    background-color: var(--background-color);
+}
+
+.ts-item-slope-short-e {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 5;
+    grid-row-end: 6;
+    background-color: var(--background-color);
+}
+
+.ts-item-slope-short-f {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 6;
+    grid-row-end: 7;
+    background-color: var(--background-color);
+}
+
+/*slope-long*/
+.ts-item-slope-long-a {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    background-color: var(--background-color);
+}
+
+.ts-item-slope-long-b {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    background-color: var(--background-color);
+}
+
+.ts-item-slope-long-c {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    background-color: var(--background-color);
+}
+
+.ts-item-slope-long-d {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    background-color: var(--background-color);
+}
+
+.ts-item-slope-long-e {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 5;
+    grid-row-end: 6;
+    background-color: var(--background-color);
+}
+
+.ts-item-slope-long-f {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 6;
+    grid-row-end: 7;
+    background-color: var(--background-color);
+}
+
+/*cross-diff*/
+.ts-item-cross-diff-a {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    background-color: var(--background-color);
+}
+
+.ts-item-cross-diff-b {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    background-color: var(--background-color);
+}
+
+.ts-item-cross-diff-c {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    background-color: var(--background-color);
+}
+
+.ts-item-cross-diff-d {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    background-color: var(--background-color);
+}
+
+.ts-item-cross-diff-e {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 5;
+    grid-row-end: 6;
+    background-color: var(--background-color);
+}
+
+.ts-item-cross-diff-f {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 6;
+    grid-row-end: 7;
+    background-color: var(--background-color);
+}
+
+/*price-short-diff*/
+.ts-item-price-short-diff-a {
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    background-color: var(--background-color);
+}
+
+.ts-item-price-short-diff-b {
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    background-color: var(--background-color);
+}
+
+.ts-item-price-short-diff-c {
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    background-color: var(--background-color);
+}
+
+.ts-item-price-short-diff-d {
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    background-color: var(--background-color);
+}
+
+.ts-item-price-short-diff-e {
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 5;
+    grid-row-end: 6;
+    background-color: var(--background-color);
+}
+
+.ts-item-price-short-diff-f {
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 6;
+    grid-row-end: 7;
+    background-color: var(--background-color);
+}
+
+/*price-long-diff*/
+.ts-item-price-long-diff-a {
+    grid-column-start: 5;
+    grid-column-end: 6;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    background-color: var(--background-color);
+}
+
+.ts-item-price-long-diff-b {
+    grid-column-start: 5;
+    grid-column-end: 6;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    background-color: var(--background-color);
+}
+
+.ts-item-price-long-diff-c {
+    grid-column-start: 5;
+    grid-column-end: 6;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    background-color: var(--background-color);
+}
+
+.ts-item-price-long-diff-d {
+    grid-column-start: 5;
+    grid-column-end: 6;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    background-color: var(--background-color);
+}
+
+.ts-item-price-long-diff-e {
+    grid-column-start: 5;
+    grid-column-end: 6;
+    grid-row-start: 5;
+    grid-row-end: 6;
+    background-color: var(--background-color);
+}
+
+.ts-item-price-long-diff-f {
+    grid-column-start: 5;
+    grid-column-end: 6;
+    grid-row-start: 6;
+    grid-row-end: 7;
+    background-color: var(--background-color);
+}

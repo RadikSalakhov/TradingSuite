@@ -1,0 +1,45 @@
+﻿.ts-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr;
+    width: 100%;
+    height: 100%;
+    justify-items: center;
+    align-items: center;
+}
+
+.ts-item-header {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    width: 100%;
+    height: 100%;
+}
+
+.ts-item-body {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    width: 100%;
+    height: 100%;
+}
+
+.ts-border-neutral {
+    border-style: solid;
+    border-color: orangered;
+    border-width: 5px;
+}
+
+.ts-border-negative {
+    border-style: solid;
+    border-color: darkred;
+    border-width: 5px;
+}
+
+.ts-border-positive {
+    border-style: solid;
+    border-color: darkgreen;
+    border-width: 5px;
+}
