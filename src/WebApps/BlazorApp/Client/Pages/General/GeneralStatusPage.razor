@@ -9,7 +9,7 @@
         PRD
     </div>
     <div class="ts-item-time">
-        @ClientCacheService.GetServerTime().ToString("HH:mm:ss")
+        @ClientCacheService.ServerTime.Get().ServerTime.ToString("HH:mm:ss")
     </div>
     <div class="ts-item-usdt-info">
         500 / 5000
@@ -25,15 +25,15 @@
     {
         base.OnInitialized();
 
-        ClientCacheService.ServerTimeUpdated += client_Updated;
+        ClientCacheService.ServerTime.Updated += client_Updated;
     }
 
     public void Dispose()
     {
-        ClientCacheService.ServerTimeUpdated -= client_Updated;
+        ClientCacheService.ServerTime.Updated -= client_Updated;
     }
 
-    private async Task client_Updated()
+    private async Task client_Updated(DateTime value)
     {
         await InvokeAsync(StateHasChanged);
     }

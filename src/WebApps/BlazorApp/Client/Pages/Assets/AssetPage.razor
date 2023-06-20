@@ -1,8 +1,15 @@
-﻿<div class="ts-container ts-border-negative">
+﻿@using BlazorApp.Client.Entities;
+
+<div class="ts-container ts-border-negative">
     <div class="ts-item-header">
-        <AssetPageHeader />
+        <AssetPageHeader AssetName=@AssetName />
     </div>
     <div class="ts-item-body">
-        <AssetPageBody />
+        <AssetPageBody AssetName=@AssetName />
     </div>    
 </div>
+
+@code{
+    [Parameter]
+    public string AssetName { get; set; } = string.Empty;
+}

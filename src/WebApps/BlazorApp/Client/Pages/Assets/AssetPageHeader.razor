@@ -1,8 +1,39 @@
-﻿<div class="ts-container">
-    <div class="ts-item-environment">
-        PRD
+﻿@using BlazorApp.Client.Entities;
+@using BlazorApp.Client.Services;
+
+@inject IClientCacheService ClientCache
+
+<div class="ts-container">
+    <div class="ts-item-asset-name">
+        @Asset.AssetName
     </div>
-    <div class="ts-item-time">
-        
+    <div class="ts-item-asset-price">
+        @Asset.AssetPrice.GetPriceString()
     </div>    
 </div>
+
+@code {
+    [Parameter]
+    public string AssetName { get; set; } = string.Empty;
+
+    public AssetEntity Asset => ClientCache.GetAssetEntity(AssetName);
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        ClientCache.AssetPrice.Updated += assetPrice_Updated;
+
+    }
+
+    public void Dispose()
+    {
+        ClientCache.AssetPrice.Updated -= assetPrice_Updated;
+    }
+
+    private async Task assetPrice_Updated(string? assetName)
+    {
+        if(string.IsNullOrEmpty(assetName) || assetName == AssetName)
+            await InvokeAsync(StateHasChanged);
+    }
+}

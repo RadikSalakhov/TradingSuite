@@ -59,9 +59,9 @@ namespace BlazorApp.Client.Hubs
             _hubConnection.Reconnecting += hubConnection_Reconnecting;
             _hubConnection.Reconnected += hubConnection_Reconnected;
 
-            _hubConnection.On<ServerTimeDTO>(nameof(ServerTimeDTO), dto => _clientCacheService.UpdateServerTime(dto.ServerTime));
+            _hubConnection.On<ServerTimeDTO>(nameof(ServerTimeDTO), async dto => await _clientCacheService.ServerTime.UpdateAsync(dto.ToEntity()));
 
-            //_hubConnection.On<IEnumerable<AssetEntity>>(TradingHubMessage.Assets, entities => TradingServiceClient.Cache.UpdateAssets(entities));
+            _hubConnection.On<AssetPriceDTO>(nameof(AssetPriceDTO), async dto => await _clientCacheService.AssetPrice.UpdateAsync(dto.ToEntity()));
 
             //_hubConnection.On<IEnumerable<PriceTickerEntity>>(TradingHubMessage.PriceTickers, entities => TradingServiceClient.Cache.UpdatePriceTickers(entities));
 

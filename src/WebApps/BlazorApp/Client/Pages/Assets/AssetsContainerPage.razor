@@ -1,16 +1,22 @@
 ﻿@using BlazorApp.Client.DTO;
+@using BlazorApp.Client.Entities;
+@using BlazorApp.Client.Services;
+
+@implements IDisposable
+
+@inject IClientCacheService ClientCache
 
 <div class="ts-container" style="@ContainerStyleTemplate">
     @{
         var curRow = 1;
         var curColumn = 1;
 
-        foreach (var asset in _assets)
+        foreach (var asset in AssetPrices)
         {
             var itemStyle = string.Format(ItemStyleTemplate, curColumn, curColumn + 1, curRow, curRow + 1, RowHeight);
 
             <div class="ts-item" style="@itemStyle">
-                <AssetPage />
+                <AssetPage AssetName=@asset.AssetName />
             </div>
 
             curColumn++;
@@ -25,11 +31,11 @@
 </div>
 
 @code{
-    private readonly List<CryptoAssetPriceDTO> _assets = new List<CryptoAssetPriceDTO>();
+    private IEnumerable<AssetPriceEntity> AssetPrices => ClientCache.AssetPrice.GetList();
 
     private int ColumnsAmount => 6;
 
-    private int RowsAmount => (int)Math.Ceiling(_assets.Count / (decimal)ColumnsAmount);
+    private int RowsAmount => (int)Math.Ceiling(ClientCache.AssetPrice.GetCount() / (decimal)ColumnsAmount);
 
     private int RowHeight => 150;
 
@@ -41,8 +47,17 @@
     {
         base.OnInitialized();
 
-        for (var i = 0; i < 32; i++)
-            _assets.Add(new CryptoAssetPriceDTO($"Asset {i}", "USDT", i));
+        ClientCache.AssetPrice.Updated += assetPrice_Updated;
 
+    }
+
+    public void Dispose()
+    {
+        ClientCache.AssetPrice.Updated -= assetPrice_Updated;
+    }
+
+    private async Task assetPrice_Updated(string? assetName)
+    {
+        await InvokeAsync(StateHasChanged);
     }
 }

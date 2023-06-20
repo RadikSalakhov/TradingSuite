@@ -24,9 +24,9 @@ namespace PriceTicker.SignalrHub.IntegrationEventHandlers
             {
                 _logger.LogInformation("Handling integration event: {IntegrationEventId} - ({@IntegrationEvent})", integrationEvent.Id, integrationEvent);
 
-                var dto = new CryptoAssetPriceDTO(integrationEvent.CryptoAsset, integrationEvent.BaseCryptoAsset, integrationEvent.Price);
+                var dto = new AssetPriceDTO(integrationEvent.CryptoAsset, integrationEvent.BaseCryptoAsset, integrationEvent.Price);
 
-                await _hubContext.Clients.All.SendAsync(nameof(CryptoAssetPriceDTO), dto);
+                await _hubContext.Clients.All.SendAsync(nameof(AssetPriceDTO), dto);
             }
         }
     }

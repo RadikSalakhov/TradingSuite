@@ -49,6 +49,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp.Client", "WebApps
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trading", "Trading", "{B305F4C4-111B-464E-8BFD-53398DDB5276}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "BuildingBlocks\Utilities\Utilities.csproj", "{FA99A00F-BEDB-4EB8-B8A5-4F013916CF1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,10 @@ Global
 		{A431FA7D-974E-40AA-8B5F-20B75AC05E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A431FA7D-974E-40AA-8B5F-20B75AC05E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A431FA7D-974E-40AA-8B5F-20B75AC05E3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA99A00F-BEDB-4EB8-B8A5-4F013916CF1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA99A00F-BEDB-4EB8-B8A5-4F013916CF1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA99A00F-BEDB-4EB8-B8A5-4F013916CF1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA99A00F-BEDB-4EB8-B8A5-4F013916CF1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -128,6 +134,7 @@ Global
 		{0FB41978-706A-40E8-AD5A-4972FFC7AC71} = {2EEC7659-95A1-48D1-9CF4-694B8BFDB657}
 		{A431FA7D-974E-40AA-8B5F-20B75AC05E3A} = {2EEC7659-95A1-48D1-9CF4-694B8BFDB657}
 		{B305F4C4-111B-464E-8BFD-53398DDB5276} = {8E0ABF95-8EE2-4EE8-BBB5-A1BFE3467820}
+		{FA99A00F-BEDB-4EB8-B8A5-4F013916CF1A} = {105B4C06-CA91-411E-B1B8-C4A4D2644971}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BE9B065-E7C9-43FC-939A-9A002CF77690}

@@ -1,11 +1,16 @@
-﻿namespace BlazorApp.Client.Services
+﻿using BlazorApp.Client.Entities;
+using BlazorApp.Client.Services.ClientCacheEntries;
+
+namespace BlazorApp.Client.Services
 {
     public interface IClientCacheService
     {
-        event Func<Task>? ServerTimeUpdated;
+        AssetCacheEntry Asset { get; }
 
-        DateTime GetServerTime();
+        AssetPriceCacheEntry AssetPrice { get; }
 
-        void UpdateServerTime(DateTime dateTime);
+        ServerTimeCacheEntry ServerTime { get; }
+
+        AssetEntity GetAssetEntity(string assetName);
     }
 }

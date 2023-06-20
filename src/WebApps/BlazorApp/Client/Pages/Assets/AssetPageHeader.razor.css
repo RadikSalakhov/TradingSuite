@@ -9,8 +9,15 @@
 }
 
 .ts-item-asset-name {
-    grid-column-start: 1;
-    grid-column-end: 2;
+    grid-column-start: 3;
+    grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 2;
+}
+
+.ts-item-asset-price {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
 }

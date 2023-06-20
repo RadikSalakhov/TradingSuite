@@ -1,21 +1,29 @@
-﻿namespace BlazorApp.Client.Services
+﻿using BlazorApp.Client.Entities;
+using BlazorApp.Client.Services.ClientCacheEntries;
+
+namespace BlazorApp.Client.Services
 {
     public class ClientCacheService : IClientCacheService
     {
-        private DateTime _serverTime = DateTime.MinValue;
+        public AssetCacheEntry Asset { get; } = new AssetCacheEntry();
 
-        public event Func<Task>? ServerTimeUpdated;
+        public AssetPriceCacheEntry AssetPrice { get; } = new AssetPriceCacheEntry();
 
-        public DateTime GetServerTime()
+        public ServerTimeCacheEntry ServerTime { get; } = new ServerTimeCacheEntry();
+
+        public AssetEntity GetAssetEntity(string assetName)
         {
-            return _serverTime;
-        }
+            var assetEntity = Asset.GetByKey(assetName);
+            if (assetEntity == null)
+                assetEntity = new AssetEntity(assetName);
 
-        public void UpdateServerTime(DateTime dateTime)
-        {
-            _serverTime = dateTime;
+            var assetPriceEntity = AssetPrice.GetByKey(assetName);
+            if (assetPriceEntity == null)
+                assetPriceEntity = new AssetPriceEntity(assetName, "USDT", 0m);
 
-            ServerTimeUpdated?.Invoke();
+            assetEntity.AssetPrice = assetPriceEntity;
+
+            return assetEntity;
         }
     }
 }
