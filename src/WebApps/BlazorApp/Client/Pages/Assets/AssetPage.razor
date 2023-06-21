@@ -2,14 +2,14 @@
 
 <div class="ts-container ts-border-negative">
     <div class="ts-item-header">
-        <AssetPageHeader AssetName=@AssetName />
+        <AssetPageHeader AssetId=@AssetId />
     </div>
     <div class="ts-item-body">
-        <AssetPageBody AssetName=@AssetName />
+        <AssetPageBody AssetId=@AssetId />
     </div>    
 </div>
 
 @code{
     [Parameter]
-    public string AssetName { get; set; } = string.Empty;
+    public string AssetId { get; set; } = string.Empty;
 }

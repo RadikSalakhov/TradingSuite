@@ -1,6 +1,6 @@
 ﻿using EventBus.Events;
 
-namespace PriceTicker.SignalrHub.IntegrationEvents
+namespace Ticker.SignalrHub.IntegrationEvents
 {
     public class BinanceCryptoAssetPriceTickerIntegrationEvent : IntegrationEvent
     {

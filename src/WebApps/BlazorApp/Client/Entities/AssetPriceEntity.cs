@@ -4,20 +4,20 @@ namespace BlazorApp.Client.Entities
 {
     public class AssetPriceEntity
     {
-        public string AssetName { get; }
+        public string AssetId { get; }
 
-        public string BaseAssetName { get; }
+        public string BaseAssetId { get; }
 
         public decimal Price { get; }
 
         public string Symbol { get; }
 
-        public AssetPriceEntity(string assetName, string baseAssetName, decimal price)
+        public AssetPriceEntity(string assetId, string baseAssetId, decimal price)
         {
-            AssetName = assetName;
-            BaseAssetName = baseAssetName;
+            AssetId = assetId;
+            BaseAssetId = baseAssetId;
             Price = price;
-            Symbol = $"{AssetName}/{BaseAssetName}";
+            Symbol = $"{AssetId}/{BaseAssetId}";
         }
 
         public string GetPriceString()

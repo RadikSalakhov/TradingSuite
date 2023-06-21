@@ -16,7 +16,7 @@
             var itemStyle = string.Format(ItemStyleTemplate, curColumn, curColumn + 1, curRow, curRow + 1, RowHeight);
 
             <div class="ts-item" style="@itemStyle">
-                <AssetPage AssetName=@asset.AssetName />
+                <AssetPage AssetId=@asset.AssetId />
             </div>
 
             curColumn++;
@@ -56,7 +56,7 @@
         ClientCache.AssetPrice.Updated -= assetPrice_Updated;
     }
 
-    private async Task assetPrice_Updated(string? assetName)
+    private async Task assetPrice_Updated(string? assetId)
     {
         await InvokeAsync(StateHasChanged);
     }

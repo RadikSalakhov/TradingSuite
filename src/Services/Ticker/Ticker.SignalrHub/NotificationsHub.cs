@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace PriceTicker.SignalrHub
+namespace Ticker.SignalrHub
 {
     public class NotificationsHub : Hub
     {

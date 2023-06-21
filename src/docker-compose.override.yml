@@ -12,7 +12,7 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
 
-  priceticker-signalrhub:
+  ticker-signalrhub:
     ports:
       - "6090:80"      
 

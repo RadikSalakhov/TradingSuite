@@ -5,7 +5,7 @@
 
 <div class="ts-container">
     <div class="ts-item-asset-name">
-        @Asset.AssetName
+        @Asset.AssetId
     </div>
     <div class="ts-item-asset-price">
         @Asset.AssetPrice.GetPriceString()
@@ -14,9 +14,9 @@
 
 @code {
     [Parameter]
-    public string AssetName { get; set; } = string.Empty;
+    public string AssetId { get; set; } = string.Empty;
 
-    public AssetEntity Asset => ClientCache.GetAssetEntity(AssetName);
+    public AssetEntity Asset => ClientCache.GetAssetEntity(AssetId);
 
     protected override void OnInitialized()
     {
@@ -31,9 +31,9 @@
         ClientCache.AssetPrice.Updated -= assetPrice_Updated;
     }
 
-    private async Task assetPrice_Updated(string? assetName)
+    private async Task assetPrice_Updated(string? assetId)
     {
-        if(string.IsNullOrEmpty(assetName) || assetName == AssetName)
+        if(string.IsNullOrEmpty(assetId) || assetId == AssetId)
             await InvokeAsync(StateHasChanged);
     }
 }

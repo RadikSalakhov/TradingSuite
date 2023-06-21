@@ -11,15 +11,15 @@ namespace BlazorApp.Client.Services
 
         public ServerTimeCacheEntry ServerTime { get; } = new ServerTimeCacheEntry();
 
-        public AssetEntity GetAssetEntity(string assetName)
+        public AssetEntity GetAssetEntity(string assetId)
         {
-            var assetEntity = Asset.GetByKey(assetName);
+            var assetEntity = Asset.GetByKey(assetId);
             if (assetEntity == null)
-                assetEntity = new AssetEntity(assetName);
+                assetEntity = new AssetEntity(assetId);
 
-            var assetPriceEntity = AssetPrice.GetByKey(assetName);
+            var assetPriceEntity = AssetPrice.GetByKey(assetId);
             if (assetPriceEntity == null)
-                assetPriceEntity = new AssetPriceEntity(assetName, "USDT", 0m);
+                assetPriceEntity = new AssetPriceEntity(assetId, "USDT", 0m);
 
             assetEntity.AssetPrice = assetPriceEntity;
 

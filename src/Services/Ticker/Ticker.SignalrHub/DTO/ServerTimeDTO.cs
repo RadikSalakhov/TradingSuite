@@ -1,4 +1,4 @@
-﻿namespace PriceTicker.SignalrHub.DTO
+﻿namespace Ticker.SignalrHub.DTO
 {
     public class ServerTimeDTO
     {

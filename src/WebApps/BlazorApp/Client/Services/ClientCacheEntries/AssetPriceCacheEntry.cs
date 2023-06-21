@@ -7,7 +7,7 @@ namespace BlazorApp.Client.Services.ClientCacheEntries
     {
         protected override string GetKey(AssetPriceEntity value)
         {
-            return value.AssetName;
+            return value.AssetId;
         }
     }
 }

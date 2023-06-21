@@ -4,14 +4,14 @@ namespace BlazorApp.Client.Entities
 {
     public class AssetEntity
     {
-        public string AssetName { get; set; }
+        public string AssetId { get; set; }
 
         public AssetPriceEntity AssetPrice { get; set; }
 
-        public AssetEntity(string assetName)
+        public AssetEntity(string assetId)
         {
-            AssetName = assetName;
-            AssetPrice = new AssetPriceEntity(assetName, "USDT", 0m);
+            AssetId = assetId;
+            AssetPrice = new AssetPriceEntity(assetId, "USDT", 0m);
         }
     }
 }

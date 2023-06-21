@@ -1,7 +1,7 @@
 using EventBus.Abstraction;
-using PriceTicker.SignalrHub;
-using PriceTicker.SignalrHub.IntegrationEventHandlers;
-using PriceTicker.SignalrHub.IntegrationEvents;
+using Ticker.SignalrHub;
+using Ticker.SignalrHub.IntegrationEventHandlers;
+using Ticker.SignalrHub.IntegrationEvents;
 using Services.Common.Extensions;
 
 var corsPolicyName = "priceticker-signalrhub-cors-policy";

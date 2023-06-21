@@ -12,11 +12,11 @@ services:
     depends_on:
       - rabbitmq
 
-  priceticker-signalrhub:
-    image: ${REGISTRY:-radiksalakhov}tradingsuite-pricetickersignalrhub
+  ticker-signalrhub:
+    image: ${REGISTRY:-radiksalakhov}tradingsuite-tickersignalrhub
     build:
       context: .
-      dockerfile: Services/PriceTicker/priceticker.SignalrHub/Dockerfile
+      dockerfile: Services/Ticker/ticker.SignalrHub/Dockerfile
     depends_on:
       - rabbitmq
 

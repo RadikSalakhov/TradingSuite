@@ -11,6 +11,6 @@ namespace BlazorApp.Client.Services
 
         ServerTimeCacheEntry ServerTime { get; }
 
-        AssetEntity GetAssetEntity(string assetName);
+        AssetEntity GetAssetEntity(string assetId);
     }
 }
