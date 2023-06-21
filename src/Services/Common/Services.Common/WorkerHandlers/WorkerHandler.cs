@@ -49,7 +49,7 @@ namespace Services.Common.WorkerHandlers
             }
         }
 
-        public async Task ProcessStep()
+        public async Task ProcessStepAsync()
         {
             var executeActions = new List<WorkerHandlerAction>();
 

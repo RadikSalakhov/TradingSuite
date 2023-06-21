@@ -46,7 +46,7 @@ namespace Binance.BackgroundTasks
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await _workerHandler.ProcessStep();
+                await _workerHandler.ProcessStepAsync();
             }
         }
 

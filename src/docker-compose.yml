@@ -12,6 +12,14 @@ services:
     depends_on:
       - rabbitmq
 
+  taapi-backgroundtasks:
+    image: ${REGISTRY:-radiksalakhov}tradingsuite-taapibackgroundtasks
+    build:
+      context: .
+      dockerfile: Services/TaApi/TaApi.BackgroundTasks/Dockerfile
+    depends_on:
+      - rabbitmq
+
   ticker-signalrhub:
     image: ${REGISTRY:-radiksalakhov}tradingsuite-tickersignalrhub
     build:

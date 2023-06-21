@@ -6,6 +6,6 @@
 
         void UnregisteredActions<T>();
 
-        Task ProcessStep();
+        Task ProcessStepAsync();
     }
 }
