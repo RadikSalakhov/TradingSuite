@@ -14,7 +14,7 @@
         {
             _value = value ?? new();
 
-            await RaiseUpdated(GetKey(_value));
+            await RaiseUpdated(value);
         }
     }
 }

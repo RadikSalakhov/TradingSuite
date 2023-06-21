@@ -1,5 +1,5 @@
 ﻿using TaApi.BackgroundTasks.Settings;
-using TaApi.BackgroundTasks.Structs;
+using TaApi.BackgroundTasks.Data;
 
 namespace TaApi.BackgroundTasks.Entities
 {

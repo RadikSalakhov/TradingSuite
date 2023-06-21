@@ -1,9 +1,11 @@
-﻿namespace TaApi.BackgroundTasks.Abstraction
+﻿using TaApi.BackgroundTasks.Data;
+
+namespace TaApi.BackgroundTasks.Abstraction
 {
     public interface ITaApiService
     {
         Task InitializeAsync();
 
-        Task ProcessStepAsync();
+        Task<IndicatorsBatch> ProcessStepAsync();
     }
 }

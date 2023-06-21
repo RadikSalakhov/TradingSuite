@@ -4,7 +4,7 @@ using TaApi.BackgroundTasks.Configuration;
 using TaApi.BackgroundTasks.DTO;
 using TaApi.BackgroundTasks.Entities;
 using TaApi.BackgroundTasks.Settings;
-using TaApi.BackgroundTasks.Structs;
+using TaApi.BackgroundTasks.Data;
 using Services.Common.Extensions;
 
 namespace TaApi.BackgroundTasks.Services
@@ -21,8 +21,8 @@ namespace TaApi.BackgroundTasks.Services
 
         private readonly IEmaProcessor _emaProcessor;
 
-        private readonly Dictionary<TAInterval, List<Func<Task>>> _actionsDict = new();
-        private readonly List<Func<Task>> _actionsToProcess = new();
+        private readonly Dictionary<TAInterval, List<Func<Task<IndicatorsBatch>>>> _actionsDict = new();
+        private readonly List<Func<Task<IndicatorsBatch>>> _actionsToProcess = new();
 
         private bool _backTracksInitialized;
 
@@ -49,7 +49,7 @@ namespace TaApi.BackgroundTasks.Services
             return Task.CompletedTask;
         }
 
-        public async Task ProcessStepAsync()
+        public async Task<IndicatorsBatch> ProcessStepAsync()
         {
             if (!_actionsToProcess.Any())
             {
@@ -66,10 +66,14 @@ namespace TaApi.BackgroundTasks.Services
             {
                 var actionToProcess = _actionsToProcess.ElementAt(0);
 
-                await actionToProcess();
+                var result = await actionToProcess();
 
                 _actionsToProcess.RemoveAt(0);
+
+                return result;
             }
+
+            return new IndicatorsBatch();
         }
 
         private void initializeEmaIndicatorsActions()
@@ -84,9 +88,9 @@ namespace TaApi.BackgroundTasks.Services
 
             foreach (var taInterval in _emaProcessor.GetSupportedIntervals())
             {
-                if (!_actionsDict.TryGetValue(taInterval, out List<Func<Task>>? actionsList))
+                if (!_actionsDict.TryGetValue(taInterval, out List<Func<Task<IndicatorsBatch>>>? actionsList))
                 {
-                    actionsList = new List<Func<Task>>();
+                    actionsList = new List<Func<Task<IndicatorsBatch>>>();
                     _actionsDict.Add(taInterval, actionsList);
                 }
 
@@ -94,12 +98,12 @@ namespace TaApi.BackgroundTasks.Services
                 foreach (var assetsBatch in assetsBatches)
                 {
                     var assetsBatchList = assetsBatch.ToList();
-                    actionsList.Add(async () => await processBulkIndicators<EmaEntity, EmaDTO>(assetsBatchList, indicators, taInterval, _emaProcessor.GetTargetEmaList));
+                    actionsList.Add(async () => await processBulkIndicators<EmaEntity, EmaDTO>(new IndicatorsBatch(TAIndicator.EMA, taInterval, assetsBatchList), indicators, _emaProcessor.GetTargetEmaList));
                 }
             }
         }
 
-        private IEnumerable<Func<Task>> getBacktrackActionsToProcess()
+        private IEnumerable<Func<Task<IndicatorsBatch>>> getBacktrackActionsToProcess()
         {
             var backtracks = _taApiOptions.TaApiSymbolsPerRequest > 1 ? _taApiOptions.TaApiSymbolsPerRequest : 1;
 
@@ -111,12 +115,12 @@ namespace TaApi.BackgroundTasks.Services
 
             foreach (var taInterval in _emaProcessor.GetSupportedIntervals())
             {
-                foreach (var cryptoAsset in _emaProcessor.GetSupportedAssets())
-                    yield return async () => await processBulkIndicators<EmaEntity, EmaDTO>(new[] { cryptoAsset }, indicators, taInterval, _emaProcessor.GetTargetEmaList);
+                foreach (var asset in _emaProcessor.GetSupportedAssets())
+                    yield return async () => await processBulkIndicators<EmaEntity, EmaDTO>(new IndicatorsBatch(TAIndicator.EMA, taInterval, new[] { asset }), indicators, _emaProcessor.GetTargetEmaList);
             }
         }
 
-        private IEnumerable<Func<Task>> getActionsToProcess()
+        private IEnumerable<Func<Task<IndicatorsBatch>>> getActionsToProcess()
         {
             foreach (var action in getActionsToProcess(TAInterval.Interval_1m))
                 yield return action;
@@ -155,9 +159,9 @@ namespace TaApi.BackgroundTasks.Services
                 yield return action;
         }
 
-        private IEnumerable<Func<Task>> getActionsToProcess(TAInterval taInterval)
+        private IEnumerable<Func<Task<IndicatorsBatch>>> getActionsToProcess(TAInterval taInterval)
         {
-            if (_actionsDict.TryGetValue(taInterval, out List<Func<Task>>? actionsList))
+            if (_actionsDict.TryGetValue(taInterval, out List<Func<Task<IndicatorsBatch>>>? actionsList))
             {
                 foreach (var action in actionsList)
                     yield return action;
@@ -230,23 +234,21 @@ namespace TaApi.BackgroundTasks.Services
             return processed;
         }
 
-        private async Task processBulkIndicators<TEntity, TDTO>(
-            IEnumerable<Asset> cryptoAssets, IEnumerable<BulkRequestIndicatorDTO> indicators, TAInterval taInterval,
-            Func<BulkResponseIdEntity, IList<TEntity>?> getTargetListFunc)
+        private async Task<IndicatorsBatch> processBulkIndicators<TEntity, TDTO>(IndicatorsBatch indicatorsBatch, IEnumerable<BulkRequestIndicatorDTO> indicators, Func<BulkResponseIdEntity, IList<TEntity>?> getTargetListFunc)
             where TEntity : BaseEntity, new()
             where TDTO : BaseDTO<TEntity>
         {
-            if (cryptoAssets == null || !cryptoAssets.Any())
-                return;
+            if (!indicatorsBatch.Assets.Any())
+                return indicatorsBatch;
 
             if (indicators == null || !indicators.Any())
-                return;
+                return indicatorsBatch;
 
-            var symbols = cryptoAssets.Select(v => $"{v.Value}/USDT");
+            var symbols = indicatorsBatch.Assets.Select(v => $"{v.Value}/USDT");
 
-            var tuples = await _taApiClient.GetBulkEntities<TEntity, TDTO>(symbols, indicators, taInterval);
+            var tuples = await _taApiClient.GetBulkEntities<TEntity, TDTO>(symbols, indicators, indicatorsBatch.TAInterval);
             if (tuples == null || !tuples.Any())
-                return;
+                return indicatorsBatch;
 
             foreach (var tuple in tuples)
             {
@@ -289,6 +291,8 @@ namespace TaApi.BackgroundTasks.Services
                     }
                 }
             }
+
+            return indicatorsBatch;
         }
     }
 }

@@ -83,7 +83,7 @@ namespace BlazorApp.Client.Services.ClientCacheEntries.Base
                 }
             }
 
-            await RaiseUpdated(key);
+            await RaiseUpdated(value);
         }
 
         public virtual async Task UpdateAsync(IEnumerable<TValue> list)

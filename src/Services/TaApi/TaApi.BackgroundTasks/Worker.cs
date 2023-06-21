@@ -3,6 +3,8 @@ using Microsoft.Extensions.Options;
 using Services.Common.WorkerHandlers;
 using TaApi.BackgroundTasks.Abstraction;
 using TaApi.BackgroundTasks.Configuration;
+using TaApi.BackgroundTasks.Data;
+using TaApi.BackgroundTasks.IntegrationEvents;
 
 namespace TaApi.BackgroundTasks
 {
@@ -18,13 +20,17 @@ namespace TaApi.BackgroundTasks
 
         private readonly ITaApiService _taApiService;
 
-        public Worker(ILogger<Worker> logger, IWorkerHandler workerHandler, IEventBus eventBus, IOptions<TaApiOptions> taApiOptions, ITaApiService taApiService)
+        private readonly IEmaProcessor _emaProcessor;
+
+        public Worker(ILogger<Worker> logger, IWorkerHandler workerHandler, IEventBus eventBus,
+            IOptions<TaApiOptions> taApiOptions, ITaApiService taApiService, IEmaProcessor emaProcessor)
         {
             _logger = logger;
             _workerHandler = workerHandler;
             _eventBus = eventBus;
             _taApiOptions = taApiOptions.Value;
             _taApiService = taApiService;
+            _emaProcessor = emaProcessor;
         }
 
         public override async Task StartAsync(CancellationToken cancellationToken)
@@ -55,7 +61,23 @@ namespace TaApi.BackgroundTasks
 
         private async Task onEveryPeriod()
         {
-            await _taApiService.ProcessStepAsync();
+            var indicatorsBatch = await _taApiService.ProcessStepAsync();
+
+            if (!indicatorsBatch.IsEmpty())
+            {
+                if (indicatorsBatch.TAIndicator == TAIndicator.EMA)
+                {
+                    foreach (var asset in indicatorsBatch.Assets)
+                    {
+                        var emaCross = _emaProcessor.GetEmaCrossEntity(asset, indicatorsBatch.TAInterval);
+                        if (emaCross != null)
+                        {
+                            var integrationEvent = new TaApiEmaCrossIntegrationEvent(emaCross.Asset, emaCross.TAInterval, emaCross.ValueShort, emaCross.ValueLong, emaCross.PrevValueShort, emaCross.PrevValueLong);
+                            _eventBus.Publish(integrationEvent);
+                        }
+                    }
+                }
+            }
         }
     }
 }

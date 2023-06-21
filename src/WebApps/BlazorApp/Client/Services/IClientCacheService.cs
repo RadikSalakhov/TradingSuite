@@ -9,6 +9,8 @@ namespace BlazorApp.Client.Services
 
         AssetPriceCacheEntry AssetPrice { get; }
 
+        EmaCrossCacheEntry EmaCross { get; }
+
         ServerTimeCacheEntry ServerTime { get; }
 
         AssetEntity GetAssetEntity(string assetId);

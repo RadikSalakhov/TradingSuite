@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using TaApi.BackgroundTasks.Structs;
+using TaApi.BackgroundTasks.Data;
 
 namespace TaApi.BackgroundTasks.DTO
 {

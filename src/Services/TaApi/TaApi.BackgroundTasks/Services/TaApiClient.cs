@@ -5,7 +5,7 @@ using TaApi.BackgroundTasks.Configuration;
 using TaApi.BackgroundTasks.DTO;
 using TaApi.BackgroundTasks.Entities;
 using TaApi.BackgroundTasks.Settings;
-using TaApi.BackgroundTasks.Structs;
+using TaApi.BackgroundTasks.Data;
 
 namespace TaApi.BackgroundTasks.Services
 {

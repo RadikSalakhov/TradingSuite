@@ -1,6 +1,8 @@
 ﻿@using BlazorApp.Client.Entities;
 @using BlazorApp.Client.Services;
 
+@implements IDisposable
+
 @inject IClientCacheService ClientCache
 
 <div class="ts-container">
@@ -31,9 +33,9 @@
         ClientCache.AssetPrice.Updated -= assetPrice_Updated;
     }
 
-    private async Task assetPrice_Updated(string? assetId)
+    private async Task assetPrice_Updated(AssetPriceEntity? assetPrice)
     {
-        if(string.IsNullOrEmpty(assetId) || assetId == AssetId)
+        if (assetPrice == null || assetPrice.AssetId == AssetId)
             await InvokeAsync(StateHasChanged);
     }
 }

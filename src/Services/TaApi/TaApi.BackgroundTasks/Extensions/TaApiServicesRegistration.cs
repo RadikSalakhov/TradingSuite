@@ -1,6 +1,5 @@
 ﻿using TaApi.BackgroundTasks.Abstraction;
 using TaApi.BackgroundTasks.Configuration;
-using TaApi.BackgroundTasks.Processors;
 using TaApi.BackgroundTasks.Services;
 
 namespace TaApi.BackgroundTasks.Extensions

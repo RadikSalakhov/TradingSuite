@@ -1,5 +1,5 @@
 ﻿using TaApi.BackgroundTasks.Entities;
-using TaApi.BackgroundTasks.Structs;
+using TaApi.BackgroundTasks.Data;
 
 namespace TaApi.BackgroundTasks.Abstraction
 {
@@ -10,5 +10,9 @@ namespace TaApi.BackgroundTasks.Abstraction
         IEnumerable<Asset> GetSupportedAssets();
 
         IEnumerable<TAInterval> GetSupportedIntervals();
+
+        EmaCrossEntity? GetEmaCrossEntity(Asset asset, TAInterval taInterval);
+
+        IEnumerable<EmaCrossEntity> GetEmaCrossEntities();
     }
 }

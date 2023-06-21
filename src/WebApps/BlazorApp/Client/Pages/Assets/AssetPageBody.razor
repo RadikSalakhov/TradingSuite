@@ -1,4 +1,11 @@
-﻿<div class="ts-container">
+﻿@using BlazorApp.Client.Entities;
+@using BlazorApp.Client.Services;
+
+@implements IDisposable
+
+@inject IClientCacheService ClientCache
+
+<div class="ts-container">
     @*slope-short*@
     <div class="ts-item ts-item-slope-short-a" style="--background-color:indianred;">
     </div>
@@ -69,4 +76,23 @@
 @code {
     [Parameter]
     public string AssetId { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        ClientCache.EmaCross.Updated += emaCross_Updated;
+
+    }
+
+    public void Dispose()
+    {
+        ClientCache.EmaCross.Updated -= emaCross_Updated;
+    }
+
+    private async Task emaCross_Updated(EmaCrossEntity? emaCross)
+    {
+        if (emaCross == null || emaCross.AssetId == AssetId)
+            await InvokeAsync(StateHasChanged);
+    }
 }

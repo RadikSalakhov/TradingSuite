@@ -1,4 +1,4 @@
-﻿namespace TaApi.BackgroundTasks.Structs
+﻿namespace TaApi.BackgroundTasks.Data
 {
     public struct TAIndicator : IComparable<TAIndicator>
     {

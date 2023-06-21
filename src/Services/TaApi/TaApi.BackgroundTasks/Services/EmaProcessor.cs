@@ -1,20 +1,13 @@
 ﻿using Microsoft.Extensions.Options;
 using TaApi.BackgroundTasks.Abstraction;
 using TaApi.BackgroundTasks.Configuration;
-using TaApi.BackgroundTasks.DTO;
 using TaApi.BackgroundTasks.Entities;
-using TaApi.BackgroundTasks.Services;
-using TaApi.BackgroundTasks.Settings;
-using TaApi.BackgroundTasks.Structs;
+using TaApi.BackgroundTasks.Data;
 
-namespace TaApi.BackgroundTasks.Processors
+namespace TaApi.BackgroundTasks.Services
 {
     public class EmaProcessor : IEmaProcessor
     {
-        private readonly ILogger _logger;
-
-        private readonly TaApiOptions _taApiOptions;
-
         private readonly Dictionary<Asset, Dictionary<TAInterval, List<EmaEntity>>> _emaShort = new();
         private readonly Dictionary<Asset, Dictionary<TAInterval, List<EmaEntity>>> _emaLong = new();
 
@@ -31,18 +24,6 @@ namespace TaApi.BackgroundTasks.Processors
         {
             TAInterval.Interval_1m, TAInterval.Interval_5m, TAInterval.Interval_15m, TAInterval.Interval_30m, TAInterval.Interval_1h
         };
-
-        public EmaProcessor(IOptions<TaApiOptions> taApiOptions)
-        {
-            _taApiOptions = taApiOptions.Value;
-
-            var loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder.AddConsole();
-            });
-
-            _logger = loggerFactory.CreateLogger<TaApiService>();
-        }
 
         public IEnumerable<Asset> GetSupportedAssets()
         {
@@ -70,7 +51,7 @@ namespace TaApi.BackgroundTasks.Processors
 
         public EmaCrossEntity? GetEmaCrossEntity(Asset asset, TAInterval taInterval)
         {
-            processEMACross();
+            processEMACross(asset, taInterval);
 
             Dictionary<TAInterval, List<EmaCrossEntity>>? emaCrossDict;
             lock (_emaCross)
@@ -188,55 +169,60 @@ namespace TaApi.BackgroundTasks.Processors
         {
             foreach (var asset in _assets)
             {
-                Dictionary<TAInterval, List<EmaCrossEntity>>? emaCrossDict;
-                lock (_emaCross)
-                {
-                    if (!_emaCross.TryGetValue(asset, out emaCrossDict))
-                    {
-                        emaCrossDict = new Dictionary<TAInterval, List<EmaCrossEntity>>();
-                        _emaCross.Add(asset, emaCrossDict);
-                    }
-                }
-
                 foreach (var taInterval in _taIntervals)
                 {
-                    List<EmaCrossEntity>? emaCrossList;
-                    lock (emaCrossDict)
+                    processEMACross(asset, taInterval);
+                }
+            }
+        }
+
+        private void processEMACross(Asset asset, TAInterval taInterval)
+        {
+            Dictionary<TAInterval, List<EmaCrossEntity>>? emaCrossDict;
+            lock (_emaCross)
+            {
+                if (!_emaCross.TryGetValue(asset, out emaCrossDict))
+                {
+                    emaCrossDict = new Dictionary<TAInterval, List<EmaCrossEntity>>();
+                    _emaCross.Add(asset, emaCrossDict);
+                }
+            }
+
+            List<EmaCrossEntity>? emaCrossList;
+            lock (emaCrossDict)
+            {
+                if (!emaCrossDict.TryGetValue(taInterval, out emaCrossList))
+                {
+                    emaCrossList = new List<EmaCrossEntity>();
+                    emaCrossDict.Add(taInterval, emaCrossList);
+                }
+            }
+
+            lock (emaCrossList)
+            {
+                emaCrossList.Clear();
+
+                var emaListShort = getEMAListShort(asset, taInterval);
+                var emaListLong = getEMAListLong(asset, taInterval);
+
+                lock (emaListShort)
+                {
+                    lock (emaListLong)
                     {
-                        if (!emaCrossDict.TryGetValue(taInterval, out emaCrossList))
+                        foreach (var emaShort in emaListShort)
                         {
-                            emaCrossList = new List<EmaCrossEntity>();
-                            emaCrossDict.Add(taInterval, emaCrossList);
-                        }
-                    }
+                            var emaLong = emaListLong.Where(v => v.ReferenceDT == emaShort.ReferenceDT).FirstOrDefault();
+                            if (emaLong == null)
+                                continue;
 
-                    lock (emaCrossList)
-                    {
-                        emaCrossList.Clear();
+                            var emaCross = new EmaCrossEntity();
+                            emaCross.ReferenceDT = emaShort.ReferenceDT;
+                            emaCross.Asset = asset;
+                            emaCross.TAInterval = taInterval;
+                            emaCross.ValueShort = emaShort.Value;
+                            emaCross.ValueLong = emaLong.Value;
 
-                        var emaListShort = getEMAListShort(asset, taInterval);
-                        var emaListLong = getEMAListLong(asset, taInterval);
-
-                        lock (emaListShort)
-                        {
-                            lock (emaListLong)
-                            {
-                                foreach (var emaShort in emaListShort)
-                                {
-                                    var emaLong = emaListLong.Where(v => v.ReferenceDT == emaShort.ReferenceDT).FirstOrDefault();
-                                    if (emaLong == null)
-                                        continue;
-
-                                    var emaCross = new EmaCrossEntity();
-                                    emaCross.ReferenceDT = emaShort.ReferenceDT;
-                                    emaCross.Asset = asset;
-                                    emaCross.TAInterval = taInterval;
-                                    emaCross.ValueShort = emaShort.Value;
-                                    emaCross.ValueLong = emaLong.Value;
-
-                                    emaCrossList.Add(emaCross);
-                                }
-                            }
+                            emaCrossList.Add(emaCross);
                         }
                     }
                 }

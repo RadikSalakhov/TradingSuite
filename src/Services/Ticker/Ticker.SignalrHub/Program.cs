@@ -14,6 +14,7 @@ builder.Services.AddSignalR();
 
 builder.Services.AddSingleton<IIntegrationEventHandler<BinanceCryptoAssetPriceTickerIntegrationEvent>, BinanceCryptoAssetPriceTickerIntegrationEventHandler>();
 builder.Services.AddSingleton<IIntegrationEventHandler<BinanceServerTimeIntegrationEvent>, BinanceServerTimeIntegrationEventHandler>();
+builder.Services.AddSingleton<IIntegrationEventHandler<TaApiEmaCrossIntegrationEvent>, TaApiEmaCrossIntegrationEventHandler>();
 
 builder.Services.AddCors(options =>
 {
@@ -36,5 +37,6 @@ var eventBus = app.Services.GetRequiredService<IEventBus>();
 
 eventBus.Subscribe<BinanceCryptoAssetPriceTickerIntegrationEvent, IIntegrationEventHandler<BinanceCryptoAssetPriceTickerIntegrationEvent>>();
 eventBus.Subscribe<BinanceServerTimeIntegrationEvent, IIntegrationEventHandler<BinanceServerTimeIntegrationEvent>>();
+eventBus.Subscribe<TaApiEmaCrossIntegrationEvent, IIntegrationEventHandler<TaApiEmaCrossIntegrationEvent>>();
 
 await app.RunAsync();

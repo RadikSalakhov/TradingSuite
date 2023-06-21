@@ -1,6 +1,6 @@
 ﻿using TaApi.BackgroundTasks.DTO;
 using TaApi.BackgroundTasks.Entities;
-using TaApi.BackgroundTasks.Structs;
+using TaApi.BackgroundTasks.Data;
 
 namespace TaApi.BackgroundTasks.Abstraction
 {
