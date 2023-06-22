@@ -72,7 +72,7 @@ namespace TaApi.BackgroundTasks
                         var emaCross = _emaProcessor.GetEmaCrossEntity(asset, indicatorsBatch.TAInterval);
                         if (emaCross != null)
                         {
-                            var integrationEvent = new TaApiEmaCrossIntegrationEvent(emaCross.Asset, emaCross.TAInterval, emaCross.ValueShort, emaCross.ValueLong, emaCross.PrevValueShort, emaCross.PrevValueLong);
+                            var integrationEvent = new IndicatorEmaCrossIntegrationEvent(emaCross.Asset, emaCross.TAInterval, emaCross.ValueShort, emaCross.ValueLong, emaCross.PrevValueShort, emaCross.PrevValueLong);
                             _eventBus.Publish(integrationEvent);
                         }
                     }

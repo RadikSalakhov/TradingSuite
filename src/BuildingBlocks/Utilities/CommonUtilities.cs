@@ -15,5 +15,10 @@
             else
                 return "0.0000";
         }
+
+        public static DateTime TruncateMillisecods(DateTime dateTime)
+        {
+            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Kind);
+        }
     }
 }

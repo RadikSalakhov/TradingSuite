@@ -10,7 +10,9 @@ namespace Binance.Infrastructure.Extensions
     {
         public static IServiceCollection AddBinanceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IBinancePriceTickerService, BinancePriceTickerService>();
+            services.AddSingleton<IBinancePriceTickerService, BinancePriceTickerService>();
+
+            services.AddSingleton<ITechnicalIndicatorsService, TechnicalIndicatorsService>();
 
             services.Configure<BinanceOptions>(configuration.GetSection(nameof(BinanceOptions)));
 

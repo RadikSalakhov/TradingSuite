@@ -2,7 +2,7 @@
 
 namespace Ticker.SignalrHub.IntegrationEvents
 {
-    public class TaApiEmaCrossIntegrationEvent : IntegrationEvent
+    public class IndicatorEmaCrossIntegrationEvent : IntegrationEvent
     {
         public string AssetId { get; }
 
@@ -16,7 +16,7 @@ namespace Ticker.SignalrHub.IntegrationEvents
 
         public decimal PrevValueLong { get; }
 
-        public TaApiEmaCrossIntegrationEvent(string assetId, string interval, decimal valueShort, decimal valueLong, decimal prevValueShort, decimal prevValueLong)
+        public IndicatorEmaCrossIntegrationEvent(string assetId, string interval, decimal valueShort, decimal valueLong, decimal prevValueShort, decimal prevValueLong)
         {
             AssetId = assetId;
             Interval = interval;
