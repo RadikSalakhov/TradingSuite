@@ -13,6 +13,26 @@
     <link href="manifest.json" rel="manifest" />
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        window.getWindowSize = function () {
+            return {
+                width: window.innerWidth,
+                height: window.innerHeight
+            };
+        };
+        function resizeListener(dotnethelper) {
+            $(window).resize(() => {
+                clearTimeout(window.resizedFinished);
+                window.resizedFinished = setTimeout(function () {
+                    dotnethelper.invokeMethodAsync('UpdateWindowSize').then(() => {
+                    }).catch(error => {
+                        console.log("Error: " + error);
+                    });
+                }, 250);
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -32,5 +52,4 @@
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
 </body>
-
 </html>

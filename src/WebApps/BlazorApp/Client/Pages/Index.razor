@@ -1,6 +1,10 @@
 ﻿@page "/"
+@using BlazorApp.Client.Abstraction;
 @using BlazorApp.Client.Pages.Assets
 @using BlazorApp.Client.Pages.General
+
+@inject IBrowserService BrowserService
+@inject IClientSettingsService ClientSettingsService
 
 <PageTitle>Trading Suite</PageTitle>
 
@@ -24,3 +28,26 @@
         <AssetsContainerPage />
     </div>
 </div>
+
+@code
+{
+    private AssetsContainerPage? _assetsContainerPage;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await BrowserService.InitializeResizeListener(this);
+
+            await UpdateWindowSize();
+        }
+    }
+
+    [JSInvokable]
+    public async Task UpdateWindowSize()
+    {
+        var windowSize = await BrowserService.GetWindowSize();
+
+        await ClientSettingsService.WindowSize.Set(windowSize);
+    }
+}

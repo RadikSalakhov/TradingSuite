@@ -1,6 +1,6 @@
-﻿using BlazorApp.Client.Configuration;
+﻿using BlazorApp.Client.Abstraction;
+using BlazorApp.Client.Configuration;
 using BlazorApp.Client.DTO;
-using BlazorApp.Client.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Options;

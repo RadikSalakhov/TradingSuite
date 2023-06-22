@@ -1,4 +1,5 @@
-﻿using BlazorApp.Client.Entities;
+﻿using BlazorApp.Client.Abstraction;
+using BlazorApp.Client.Entities;
 using BlazorApp.Client.Services.ClientCacheEntries;
 
 namespace BlazorApp.Client.Services
