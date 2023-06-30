@@ -10,17 +10,12 @@ properties:
         requests:
           cpu: 1
           memoryInGb: 1
-      ports:
-      - port: 80
+      ports:      
       - port: 5672
-      - port: 15672
+      - port: 15672  
   osType: Linux
   ipAddress:
     type: Public
-    ports:
-    - protocol: tcp
-      port: 80
-    - protocol: tcp
-      port: 5672
-    - protocol: tcp
-      port: 15672
+    ports:        
+    - port: 5672
+    - port: 15672

@@ -2,6 +2,6 @@
 {
     public sealed class ClientOptions
     {
-        public string SignalrHubUrl { get; set; } = string.Empty;
+        public int SignalrHubPort { get; set; }
     }
 }

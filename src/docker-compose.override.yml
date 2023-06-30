@@ -19,14 +19,15 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
 
   ticker-signalrhub:
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:6090
     ports:
-      - "6090:80"      
+      - "6090:6090"
 
   blazorapp:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:80;https://0.0.0.0:443
-      - SignalrHubUrl=http://localhost:6090/hub
+      - ASPNETCORE_URLS=http://0.0.0.0:80      
     ports:
       - "6080:80"
       - "6081:443"

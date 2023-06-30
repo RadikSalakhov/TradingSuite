@@ -9,7 +9,6 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["WebApps/BlazorApp/Server/BlazorApp.Server.csproj", "WebApps/BlazorApp/Server/"]
 COPY ["WebApps/BlazorApp/Client/BlazorApp.Client.csproj", "WebApps/BlazorApp/Client/"]
-COPY ["WebApps/BlazorApp/Shared/BlazorApp.Shared.csproj", "WebApps/BlazorApp/Shared/"]
 RUN dotnet restore "WebApps/BlazorApp/Server/BlazorApp.Server.csproj"
 COPY . .
 WORKDIR "/src/WebApps/BlazorApp/Server"

@@ -5,7 +5,7 @@ services:
     image: rabbitmq:3-management-alpine
 
   binance-backgroundtasks:
-    image: ${REGISTRY:-radiksalakhov}tradingsuite-binancebackgroundtasks
+    image: tradingsuitecr.azurecr.io/binancebackgroundtasks
     build:
       context: .
       dockerfile: Services/Binance/Binance.BackgroundTasks/Dockerfile
@@ -13,7 +13,7 @@ services:
       - rabbitmq
 
   taapi-backgroundtasks:
-    image: ${REGISTRY:-radiksalakhov}tradingsuite-taapibackgroundtasks
+    image: tradingsuitecr.azurecr.io/taapibackgroundtasks
     build:
       context: .
       dockerfile: Services/TaApi/TaApi.BackgroundTasks/Dockerfile
@@ -21,7 +21,7 @@ services:
       - rabbitmq
 
   ticker-signalrhub:
-    image: ${REGISTRY:-radiksalakhov}tradingsuite-tickersignalrhub
+    image: tradingsuitecr.azurecr.io/tickersignalrhub
     build:
       context: .
       dockerfile: Services/Ticker/ticker.SignalrHub/Dockerfile
@@ -29,7 +29,7 @@ services:
       - rabbitmq
 
   blazorapp:
-    image: ${REGISTRY:-radiksalakhov}tradingsuite-blazorapp
+    image: tradingsuitecr.azurecr.io/tradingsuite-blazorapp
     build:
       context: .
       dockerfile: WebApps/BlazorApp/Server/Dockerfile    

@@ -1,0 +1,75 @@
+apiVersion: 2019-12-01
+location: westeurope
+name: trading-suite-containers-group
+properties:
+  containers:  
+  - name: binance-backgroundtasks
+    properties:
+      image: tradingsuitecr.azurecr.io/binancebackgroundtasks
+      environmentVariables:
+      - name: DOTNET_ENVIRONMENT
+        value: Development
+      - name: ConnectionStrings__EventBus
+        value: EVENT_BUS_URL
+      - name: BinanceOptions__BinanceApiKey
+        value: BINANCE_API_KEY
+      - name: BinanceOptions__BinanceApiSecret
+        value: BINANCE_API_SECRET
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1
+  - name: taapi-backgroundtasks
+    properties:
+      image: tradingsuitecr.azurecr.io/taapibackgroundtasks
+      environmentVariables:
+      - name: DOTNET_ENVIRONMENT
+        value: Development
+      - name: ConnectionStrings__EventBus
+        value: EVENT_BUS_URL
+      - name: TaApiOptions__TaApiKey
+        value: TA_API_KEY
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1
+  - name: ticker-signalrhub
+    properties:
+      image: tradingsuitecr.azurecr.io/tickersignalrhub      
+      ports:
+      - port: 6090      
+      environmentVariables:
+      - name: ASPNETCORE_URLS
+        value: http://0.0.0.0:6090
+      - name: ConnectionStrings__EventBus
+        value: EVENT_BUS_URL
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1
+  - name: blazorapp
+    properties:
+      image: tradingsuitecr.azurecr.io/tradingsuite-blazorapp
+      environmentVariables:
+      - name: ASPNETCORE_ENVIRONMENT
+        value: Development
+      - name: ASPNETCORE_URLS
+        value: http://0.0.0.0:80      
+      ports:
+      - port: 80      
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1
+  ipAddress:
+    type: Public
+    ports:    
+    - port: 80  
+    - port: 6090  
+  osType: Linux
+  imageRegistryCredentials:
+  - server: SERVER
+    username: USER_NAME
+    password: PASSWORD
+
+type: Microsoft.ContainerInstance/containerGroups
