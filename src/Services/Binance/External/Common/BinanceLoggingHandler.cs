@@ -26,11 +26,11 @@ namespace Binance.Common
 
         protected override HttpRequestMessage ProcessRequest(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            this.logger.LogDebug(request.ToString());
+            this.logger.LogInformation(request.ToString());
 
             if (null != request.Content)
             {
-                this.logger.LogDebug(request.Content.ReadAsStringAsync().Result);
+                this.logger.LogInformation(request.Content.ReadAsStringAsync().Result);
             }
 
             return request;
@@ -38,11 +38,11 @@ namespace Binance.Common
 
         protected override HttpResponseMessage ProcessResponse(HttpResponseMessage response, CancellationToken cancellationToken)
         {
-            this.logger.LogDebug(response.ToString());
+            this.logger.LogInformation(response.ToString());
 
             if (null != response.Content)
             {
-                this.logger.LogDebug(response.Content.ReadAsStringAsync().Result);
+                this.logger.LogInformation(response.Content.ReadAsStringAsync().Result);
             }
 
             return response;
