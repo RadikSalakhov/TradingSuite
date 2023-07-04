@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: secret-config-map
+data:
+  BinanceOptions__BinanceApiKey: YOUR_BINANCE_API_KEY
+  BinanceOptions__BinanceApiSecret: YOUR_BINANCE_API_SECRET
+  TaApiOptions__TaApiKey: YOUR_TA_API_KEY

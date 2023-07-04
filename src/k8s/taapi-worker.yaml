@@ -1,0 +1,37 @@
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: binance-worker-service
+# spec:
+#   selector:
+#     app: binance-worker
+#   type: ClusterIP  
+# ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taapi-worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taapi-worker
+  template:
+    metadata:
+      labels:
+        app: taapi-worker
+    spec:
+      containers:
+        - name: taapi-worker
+          image: radiksalakhov/ts-taapi-worker:latest
+          imagePullPolicy: Always
+          env:
+            - name: DOTNET_ENVIRONMENT
+              value: Development
+            - name: ConnectionStrings__EventBus
+              value: 'rabbitmq-service.default'
+            - name: TaApiOptions__TaApiKey
+              valueFrom:
+                configMapKeyRef:
+                  name: secret-config-map
+                  key: TaApiOptions__TaApiKey

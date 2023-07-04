@@ -5,7 +5,7 @@ services:
     image: rabbitmq:3-management-alpine
 
   ts-binance-worker:
-    image: radiksalakhov/ts-binance-worker
+    image: radiksalakhov/ts-binance-worker:latest
     build:
       context: .
       dockerfile: Services/Binance/Binance.BackgroundTasks/Dockerfile
@@ -13,7 +13,7 @@ services:
       - ts-rabbitmq
 
   ts-taapi-worker:
-    image: radiksalakhov/ts-taapi-worker
+    image: radiksalakhov/ts-taapi-worker:latest
     build:
       context: .
       dockerfile: Services/TaApi/TaApi.BackgroundTasks/Dockerfile
@@ -21,7 +21,7 @@ services:
       - ts-rabbitmq
 
   #ts-ticker-signalrhub:
-  #  image: radiksalakhov/ts-ticker-signalrhub
+  #  image: radiksalakhov/ts-ticker-signalrhub:latest
   #  build:
   #    context: .
   #    dockerfile: Services/Ticker/ticker.SignalrHub/Dockerfile
@@ -29,7 +29,7 @@ services:
   #    - ts-rabbitmq
 
   ts-blazorapp:
-    image: radiksalakhov/ts-blazorapp
+    image: radiksalakhov/ts-blazorapp:latest
     build:
       context: .
       dockerfile: WebApps/BlazorApp/Server/Dockerfile    
