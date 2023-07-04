@@ -1,36 +1,38 @@
 version: '3.4'
 
 services:
-  rabbitmq:
+  ts-rabbitmq:
     image: rabbitmq:3-management-alpine
 
-  binance-backgroundtasks:
-    image: tradingsuitecr.azurecr.io/binancebackgroundtasks
+  ts-binance-worker:
+    image: radiksalakhov/ts-binance-worker
     build:
       context: .
       dockerfile: Services/Binance/Binance.BackgroundTasks/Dockerfile
     depends_on:
-      - rabbitmq
+      - ts-rabbitmq
 
-  taapi-backgroundtasks:
-    image: tradingsuitecr.azurecr.io/taapibackgroundtasks
+  ts-taapi-worker:
+    image: radiksalakhov/ts-taapi-worker
     build:
       context: .
       dockerfile: Services/TaApi/TaApi.BackgroundTasks/Dockerfile
     depends_on:
-      - rabbitmq
+      - ts-rabbitmq
 
-  ticker-signalrhub:
-    image: tradingsuitecr.azurecr.io/tickersignalrhub
-    build:
-      context: .
-      dockerfile: Services/Ticker/ticker.SignalrHub/Dockerfile
-    depends_on:
-      - rabbitmq
+  #ts-ticker-signalrhub:
+  #  image: radiksalakhov/ts-ticker-signalrhub
+  #  build:
+  #    context: .
+  #    dockerfile: Services/Ticker/ticker.SignalrHub/Dockerfile
+  #  depends_on:
+  #    - ts-rabbitmq
 
-  blazorapp:
-    image: tradingsuitecr.azurecr.io/tradingsuite-blazorapp
+  ts-blazorapp:
+    image: radiksalakhov/ts-blazorapp
     build:
       context: .
       dockerfile: WebApps/BlazorApp/Server/Dockerfile    
+    depends_on:
+      - ts-rabbitmq
 

@@ -14,7 +14,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddScoped<IBrowserService, BrowserService>();
 
-builder.Services.Configure<ClientOptions>(builder.Configuration);
+//builder.Services.Configure<ClientOptions>(builder.Configuration);
 
 builder.Services.AddSingleton<IClientSettingsService, ClientSettingsService>();
 

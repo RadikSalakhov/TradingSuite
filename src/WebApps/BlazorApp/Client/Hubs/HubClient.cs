@@ -11,7 +11,7 @@ namespace BlazorApp.Client.Hubs
     {
         private readonly NavigationManager _navigationManager;
 
-        private readonly ClientOptions _clientOptions;
+        //private readonly ClientOptions _clientOptions;
 
         private readonly IClientCacheService _clientCacheService;
 
@@ -27,10 +27,10 @@ namespace BlazorApp.Client.Hubs
             }
         }
 
-        public HubClient(NavigationManager navigationManager, IOptions<ClientOptions> clientOptions, IClientCacheService clientCacheService)
+        public HubClient(NavigationManager navigationManager, /*IOptions<ClientOptions> clientOptions,*/ IClientCacheService clientCacheService)
         {
             _navigationManager = navigationManager;
-            _clientOptions = clientOptions.Value;
+            //_clientOptions = clientOptions.Value;
             _clientCacheService = clientCacheService;
         }
 
@@ -54,15 +54,15 @@ namespace BlazorApp.Client.Hubs
             if (_hubConnection != null)
                 await _hubConnection.DisposeAsync();
 
-            var uriBuilder = new UriBuilder(_navigationManager.BaseUri)
-            {
-                Port = _clientOptions.SignalrHubPort,
-                Path = "hub"
-            };
+            //var uriBuilder = new UriBuilder(_navigationManager.BaseUri)
+            //{
+            //    //Port = _clientOptions.SignalrHubPort,
+            //    Path = "hub"
+            //};
 
             _hubConnection = new HubConnectionBuilder()
-                //.WithUrl(_navigationManager.ToAbsoluteUri("hub"))
-                .WithUrl(uriBuilder.ToString())
+                .WithUrl(_navigationManager.ToAbsoluteUri("hub"))
+                //.WithUrl(uriBuilder.ToString())
                 .Build();
 
             _hubConnection.Closed += hubConnection_Closed;
