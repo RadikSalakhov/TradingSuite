@@ -1,38 +1,48 @@
 version: '3.4'
 
 services:
-  ts-rabbitmq:
+  gateway:
+    image: radiksalakhov/ts-gateway:latest
+    build:
+      context: .
+      dockerfile: ApiGateways/Envoy/Dockerfile
+    ports:
+      - "9901:9901"
+      - "10000:10000"    
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
     image: rabbitmq:3-management-alpine
 
-  ts-binance-worker:
+  binance-worker:
     image: radiksalakhov/ts-binance-worker:latest
     build:
       context: .
       dockerfile: Services/Binance/Binance.BackgroundTasks/Dockerfile
     depends_on:
-      - ts-rabbitmq
+      - rabbitmq
 
-  ts-taapi-worker:
+  taapi-worker:
     image: radiksalakhov/ts-taapi-worker:latest
     build:
       context: .
       dockerfile: Services/TaApi/TaApi.BackgroundTasks/Dockerfile
     depends_on:
-      - ts-rabbitmq
+      - rabbitmq
 
-  #ts-ticker-signalrhub:
-  #  image: radiksalakhov/ts-ticker-signalrhub:latest
-  #  build:
-  #    context: .
-  #    dockerfile: Services/Ticker/ticker.SignalrHub/Dockerfile
-  #  depends_on:
-  #    - ts-rabbitmq
+  ticker-signalrhub:
+   image: radiksalakhov/ts-ticker-signalrhub:latest
+   build:
+     context: .
+     dockerfile: Services/Ticker/ticker.SignalrHub/Dockerfile
+   depends_on:
+     - rabbitmq
 
-  ts-blazorapp:
+  blazorapp:
     image: radiksalakhov/ts-blazorapp:latest
     build:
       context: .
       dockerfile: WebApps/BlazorApp/Server/Dockerfile    
     depends_on:
-      - ts-rabbitmq
-
+      - rabbitmq

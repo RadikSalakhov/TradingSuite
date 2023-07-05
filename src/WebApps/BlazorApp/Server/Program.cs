@@ -45,7 +45,7 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
@@ -58,7 +58,7 @@ app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
-app.MapHub<NotificationsHub>("/hub");
+//app.MapHub<NotificationsHub>("/hub");
 
 var eventBus = app.Services.GetRequiredService<IEventBus>();
 

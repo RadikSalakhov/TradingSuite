@@ -26,7 +26,7 @@ namespace BlazorApp.Server.IntegrationEventHandlers
 
                 var dto = new AssetPriceDTO(integrationEvent.CryptoAsset, integrationEvent.BaseCryptoAsset, integrationEvent.Price);
 
-                await _hubContext.Clients.All.SendAsync(nameof(AssetPriceDTO), dto);
+                //await _hubContext.Clients.All.SendAsync(nameof(AssetPriceDTO), dto);
             }
         }
     }

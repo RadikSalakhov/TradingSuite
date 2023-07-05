@@ -1,33 +1,34 @@
 version: '3.4'
 
 services:
-  ts-rabbitmq:
+  rabbitmq:
     ports:
       - "15672:15672"
       - "5672:5672"      
 
-  ts-binance-worker:
+  binance-worker:
     environment:
       - DOTNET_ENVIRONMENT=Development
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
 
-  ts-taapi-worker:
+  taapi-worker:
     environment:
       - DOTNET_ENVIRONMENT=Development
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
 
-  #ts-ticker-signalrhub:
-  #  environment:
-  #    - ASPNETCORE_URLS=http://0.0.0.0:80
-  #  ports:
-  #    - "6090:80"
+  ticker-signalrhub:
+   environment:
+     - ASPNETCORE_URLS=http://0.0.0.0:80
+   ports:
+     - "6090:80"
 
-  ts-blazorapp:
+  blazorapp:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:80;https://0.0.0.0:443
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      #- ASPNETCORE_URLS=http://0.0.0.0:80;https://0.0.0.0:443
     ports:
-      - "80:80"
-      - "443:443"
+      - "6080:80"
+      - "6081:443"

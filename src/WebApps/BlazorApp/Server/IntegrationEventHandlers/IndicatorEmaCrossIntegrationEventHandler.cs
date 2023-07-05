@@ -26,7 +26,7 @@ namespace BlazorApp.Server.IntegrationEventHandlers
 
                 var dto = new EmaCrossDTO(integrationEvent.AssetId, integrationEvent.Interval, integrationEvent.ValueShort, integrationEvent.ValueLong, integrationEvent.PrevValueShort, integrationEvent.PrevValueLong);
 
-                await _hubContext.Clients.All.SendAsync(nameof(EmaCrossDTO), dto);
+                //await _hubContext.Clients.All.SendAsync(nameof(EmaCrossDTO), dto);
             }
         }
     }

@@ -26,7 +26,7 @@ namespace BlazorApp.Server.IntegrationEventHandlers
 
                 var dto = new ServerTimeDTO(integrationEvent.ServerTime);
 
-                await _hubContext.Clients.All.SendAsync(nameof(ServerTimeDTO), dto);
+                //await _hubContext.Clients.All.SendAsync(nameof(ServerTimeDTO), dto);
             }
         }
     }

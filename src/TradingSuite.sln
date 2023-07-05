@@ -53,7 +53,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticker.SignalrHub", "Servic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TaApi", "TaApi", "{DC2E67AF-8BD6-4DA9-88FF-1F13961EE16F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaApi.BackgroundTasks", "Services\TaApi\TaApi.BackgroundTasks\TaApi.BackgroundTasks.csproj", "{14A2D992-4505-4A5C-806F-D4318F233D51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaApi.BackgroundTasks", "Services\TaApi\TaApi.BackgroundTasks\TaApi.BackgroundTasks.csproj", "{14A2D992-4505-4A5C-806F-D4318F233D51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{EADEEFCD-BC73-4AB7-B464-ACD4227CF735}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Envoy", "Envoy", "{27134C0F-3113-4D69-972D-CA54202C53A9}"
+	ProjectSection(SolutionItems) = preProject
+		ApiGateways\Envoy\Dockerfile = ApiGateways\Envoy\Dockerfile
+		ApiGateways\Envoy\envoy.yaml = ApiGateways\Envoy\envoy.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,6 +153,8 @@ Global
 		{3CE2D05E-48AC-46AE-A7BC-E36BC80B2233} = {FCF7E84E-CFC7-4369-8D7D-F9413B441918}
 		{DC2E67AF-8BD6-4DA9-88FF-1F13961EE16F} = {8E0ABF95-8EE2-4EE8-BBB5-A1BFE3467820}
 		{14A2D992-4505-4A5C-806F-D4318F233D51} = {DC2E67AF-8BD6-4DA9-88FF-1F13961EE16F}
+		{EADEEFCD-BC73-4AB7-B464-ACD4227CF735} = {B9CC6EF8-613B-416B-8036-27FCC1DD927A}
+		{27134C0F-3113-4D69-972D-CA54202C53A9} = {EADEEFCD-BC73-4AB7-B464-ACD4227CF735}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BE9B065-E7C9-43FC-939A-9A002CF77690}
