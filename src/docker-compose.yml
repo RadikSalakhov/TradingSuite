@@ -2,47 +2,50 @@ version: '3.4'
 
 services:
   gateway:
-    image: radiksalakhov/ts-gateway:latest
-    build:
-      context: .
-      dockerfile: ApiGateways/Envoy/Dockerfile
     ports:
-      - "9901:9901"
-      - "10000:10000"    
-    depends_on:
-      - rabbitmq
+      - "80:80"
+      - "8080:8080"
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
+    ports:
+      - "15672:15672"
+      - "5672:5672"
 
-  binance-worker:
-    image: radiksalakhov/ts-binance-worker:latest
+  binance-worker:    
     build:
       context: .
-      dockerfile: Services/Binance/Binance.BackgroundTasks/Dockerfile
+      dockerfile: Services/Binance/Binance.BackgroundTasks/Dockerfile    
     depends_on:
       - rabbitmq
 
-  taapi-worker:
-    image: radiksalakhov/ts-taapi-worker:latest
+  taapi-worker:    
     build:
       context: .
       dockerfile: Services/TaApi/TaApi.BackgroundTasks/Dockerfile
     depends_on:
       - rabbitmq
 
-  ticker-signalrhub:
-   image: radiksalakhov/ts-ticker-signalrhub:latest
-   build:
-     context: .
-     dockerfile: Services/Ticker/ticker.SignalrHub/Dockerfile
-   depends_on:
-     - rabbitmq
+  ticker-signalrhub:   
+    build:
+      context: .
+      dockerfile: Services/Ticker/ticker.SignalrHub/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+    ports:
+      - "6090:80"
+    depends_on:
+      - rabbitmq
 
-  blazorapp:
-    image: radiksalakhov/ts-blazorapp:latest
+  blazorapp:    
     build:
       context: .
       dockerfile: WebApps/BlazorApp/Server/Dockerfile    
+    environment:      
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      #- ASPNETCORE_URLS=http://0.0.0.0:80;https://0.0.0.0:443
+    ports:
+      - "6080:80"
+      - "6081:443"
     depends_on:
       - rabbitmq

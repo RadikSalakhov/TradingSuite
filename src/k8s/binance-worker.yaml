@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: binance-worker
-          image: radiksalakhov/ts-binance-worker:latest
+          image: radiksalakhov/ts-binance-worker:prod
           imagePullPolicy: Always
           env:
             - name: DOTNET_ENVIRONMENT

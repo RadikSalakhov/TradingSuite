@@ -5,7 +5,7 @@ metadata:
 spec:
   selector:
     app: blazorapp
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - protocol: TCP
       port: 80
@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: blazorapp
-          image: radiksalakhov/ts-blazorapp:latest
+          image: radiksalakhov/ts-blazorapp:prod
           imagePullPolicy: Always
           env:
             - name: ASPNETCORE_ENVIRONMENT
