@@ -11,7 +11,7 @@
         @Asset.BaseAsset
     </div>
     <div class="ts-item-asset-price">
-        @Asset.AssetPrice.GetPriceString()
+        @Asset.GetPriceString()
     </div>    
 </div>
 
@@ -19,24 +19,26 @@
     [Parameter]
     public string BaseAsset { get; set; } = string.Empty;
 
-    public AssetEntity Asset => ClientCache.GetAssetEntity(BaseAsset);
+    private string AssetType => "CRYPTO";
+
+    private AssetEntity Asset => ClientCache.Asset.GetByKeys(AssetType, BaseAsset) ?? new AssetEntity(AssetType, BaseAsset);
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        ClientCache.AssetPrice.Updated += assetPrice_Updated;
+        ClientCache.Asset.Updated += assetPrice_Updated;
 
     }
 
     public void Dispose()
     {
-        ClientCache.AssetPrice.Updated -= assetPrice_Updated;
+        ClientCache.Asset.Updated -= assetPrice_Updated;
     }
 
-    private async Task assetPrice_Updated(AssetPriceEntity? assetPrice)
+    private async Task assetPrice_Updated(AssetEntity? assetEntity)
     {
-        if (assetPrice == null || assetPrice.BaseAsset == BaseAsset)
+        if (assetEntity == null || (assetEntity.AssetType == AssetType && assetEntity.BaseAsset == BaseAsset))
             await InvokeAsync(StateHasChanged);
     }
 }

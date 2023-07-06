@@ -8,13 +8,18 @@
 
         public string Interval { get; }
 
-        public decimal ValueShort { get; }
+        public decimal ValueShort { get; set; }
 
-        public decimal ValueLong { get; }
+        public decimal ValueLong { get; set; }
 
-        public decimal PrevValueShort { get; }
+        public decimal PrevValueShort { get; set; }
 
-        public decimal PrevValueLong { get; }
+        public decimal PrevValueLong { get; set; }
+
+        public EmaCrossEntity(string assetType, string baseAsset, string interval)
+            : this(assetType, baseAsset, interval, 0m, 0m, 0m, 0m)
+        {
+        }
 
         public EmaCrossEntity(string assetType, string baseAsset, string interval, decimal valueShort, decimal valueLong, decimal prevValueShort, decimal prevValueLong)
         {

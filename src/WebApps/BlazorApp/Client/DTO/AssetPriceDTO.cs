@@ -19,10 +19,5 @@ namespace BlazorApp.Client.DTO
             QuoteAsset = quoteAsset;
             Price = price;
         }
-
-        public AssetPriceEntity ToEntity()
-        {
-            return new AssetPriceEntity(AssetType, BaseAsset, QuoteAsset, Price);
-        }
     }
 }

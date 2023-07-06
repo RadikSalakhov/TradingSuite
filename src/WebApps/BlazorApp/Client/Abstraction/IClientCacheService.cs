@@ -7,12 +7,6 @@ namespace BlazorApp.Client.Abstraction
     {
         AssetCacheEntry Asset { get; }
 
-        AssetPriceCacheEntry AssetPrice { get; }
-
-        EmaCrossCacheEntry EmaCross { get; }
-
         ServerTimeCacheEntry ServerTime { get; }
-
-        AssetEntity GetAssetEntity(string baseAsset);
     }
 }

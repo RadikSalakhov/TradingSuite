@@ -48,14 +48,18 @@
     [Parameter]
     public string BaseAsset { get; set; } = string.Empty;
 
-    private decimal AssetPrice => ClientCache.AssetPrice.GetByKeys("CRYPTO", BaseAsset)?.Price ?? 0m;
+    private string AssetType => "CRYPTO";
 
-    private EmaCrossEntity? EmaCrossA => ClientCache.EmaCross.GetByKeys(BaseAsset, "1s");
-    private EmaCrossEntity? EmaCrossB => ClientCache.EmaCross.GetByKeys(BaseAsset, "1m");
-    private EmaCrossEntity? EmaCrossC => ClientCache.EmaCross.GetByKeys(BaseAsset, "5m");
-    private EmaCrossEntity? EmaCrossD => ClientCache.EmaCross.GetByKeys(BaseAsset, "15m");
-    private EmaCrossEntity? EmaCrossE => ClientCache.EmaCross.GetByKeys(BaseAsset, "30m");
-    private EmaCrossEntity? EmaCrossF => ClientCache.EmaCross.GetByKeys(BaseAsset, "31h");
+    private AssetEntity Asset => ClientCache.Asset.GetByKeys(AssetType, BaseAsset) ?? new AssetEntity(AssetType, BaseAsset);
+
+    private decimal AssetPrice => Asset.PriceUSDT;
+
+    private EmaCrossEntity? EmaCrossA => Asset.GetEmaCrossEntity("1s");
+    private EmaCrossEntity? EmaCrossB => Asset.GetEmaCrossEntity("1m");
+    private EmaCrossEntity? EmaCrossC => Asset.GetEmaCrossEntity("5m");
+    private EmaCrossEntity? EmaCrossD => Asset.GetEmaCrossEntity("15m");
+    private EmaCrossEntity? EmaCrossE => Asset.GetEmaCrossEntity("30m");
+    private EmaCrossEntity? EmaCrossF => Asset.GetEmaCrossEntity("1h");
 
     private decimal SlopeShortA => EmaCrossA?.GetSlopeShortCoeff() ?? 0m;
     private decimal SlopeShortB => EmaCrossB?.GetSlopeShortCoeff() ?? 0m;
@@ -96,18 +100,18 @@
     {
         base.OnInitialized();
 
-        ClientCache.EmaCross.Updated += emaCross_Updated;
+        ClientCache.Asset.Updated += asset_Updated;
 
     }
 
     public void Dispose()
     {
-        ClientCache.EmaCross.Updated -= emaCross_Updated;
+        ClientCache.Asset.Updated -= asset_Updated;
     }
 
-    private async Task emaCross_Updated(EmaCrossEntity? emaCross)
+    private async Task asset_Updated(AssetEntity? assetEntity)
     {
-        if (emaCross == null || emaCross.BaseAsset == BaseAsset)
+        if (assetEntity == null || (assetEntity.AssetType == AssetType && assetEntity.BaseAsset == BaseAsset))
             await InvokeAsync(StateHasChanged);
     }
 

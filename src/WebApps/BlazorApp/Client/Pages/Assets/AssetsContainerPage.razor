@@ -15,7 +15,7 @@
             var curRow = 1;
             var curColumn = 1;
 
-            foreach (var asset in AssetPrices)
+            foreach (var asset in Assets)
             {
                 var itemStyle = string.Format(ItemStyleTemplate, curColumn, curColumn + 1, curRow, curRow + 1, RowHeight);
 
@@ -35,7 +35,7 @@
 </div>
 
 @code{
-    private IEnumerable<AssetPriceEntity> AssetPrices => ClientCache.AssetPrice.GetList().OrderBy(v => v.BaseAsset);
+    private IEnumerable<AssetEntity> Assets => ClientCache.Asset.GetList().OrderBy(v => v.BaseAsset);
 
     private string HeightStr => $"{ClientSettings.WindowSize.ClientAreaHeight}px";
 
@@ -55,14 +55,14 @@
 
         ClientSettings.WindowSize.Updated += clientSettings_WindowSizeUpdated;
 
-        ClientCache.AssetPrice.Updated += assetPrice_Updated;
+        ClientCache.Asset.Updated += asset_Updated;
     }
 
     public void Dispose()
     {
         ClientSettings.WindowSize.Updated -= clientSettings_WindowSizeUpdated;
 
-        ClientCache.AssetPrice.Updated -= assetPrice_Updated;
+        ClientCache.Asset.Updated -= asset_Updated;
     }
 
     private async Task clientSettings_WindowSizeUpdated()
@@ -70,7 +70,7 @@
         await InvokeAsync(StateHasChanged);
     }
 
-    private async Task assetPrice_Updated(AssetPriceEntity? assetPrice)
+    private async Task asset_Updated(AssetEntity? assetPrice)
     {
         await InvokeAsync(StateHasChanged);
     }
