@@ -8,11 +8,11 @@ namespace Ticker.SignalrHub.IntegrationEventHandlers
     public class BinanceServerTimeIntegrationEventHandler : IIntegrationEventHandler<BinanceServerTimeIntegrationEvent>
     {
         private readonly IHubContext<NotificationsHub> _hubContext;
-        private readonly ILogger<BinanceCryptoAssetPriceTickerIntegrationEventHandler> _logger;
+        private readonly ILogger<AssetPriceTickerIntegrationEventHandler> _logger;
 
         public BinanceServerTimeIntegrationEventHandler(
             IHubContext<NotificationsHub> hubContext,
-            ILogger<BinanceCryptoAssetPriceTickerIntegrationEventHandler> logger)
+            ILogger<AssetPriceTickerIntegrationEventHandler> logger)
         {
             _hubContext = hubContext ?? throw new ArgumentNullException(nameof(hubContext));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

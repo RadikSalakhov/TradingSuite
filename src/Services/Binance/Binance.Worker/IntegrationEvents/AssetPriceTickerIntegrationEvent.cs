@@ -1,6 +1,8 @@
-﻿namespace Ticker.SignalrHub.DTO
+﻿using EventBus.Events;
+
+namespace Binance.Worker.IntegrationEvents
 {
-    public class AssetPriceDTO
+    public class AssetPriceTickerIntegrationEvent : IntegrationEvent
     {
         public string AssetType { get; }
 
@@ -10,7 +12,7 @@
 
         public decimal Price { get; }
 
-        public AssetPriceDTO(string assetType, string baseAsset, string quoteAsset, decimal price)
+        public AssetPriceTickerIntegrationEvent(string assetType, string baseAsset, string quoteAsset, decimal price)
         {
             AssetType = assetType;
             BaseAsset = baseAsset;

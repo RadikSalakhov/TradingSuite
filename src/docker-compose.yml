@@ -10,9 +10,20 @@ services:
     image: rabbitmq:3-management-alpine
     ports:
       - "15672:15672"
-      - "5672:5672"
+      - "5672:5672"    
 
-  binance-worker:    
+  assets-api:
+    build:
+      context: .
+      dockerfile: Services/Assets/Assets.API/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+    ports:
+      - "6004:80"
+    depends_on:
+      - rabbitmq  
+
+  binance-worker:
     build:
       context: .
       dockerfile: Services/Binance/Binance.Worker/Dockerfile
@@ -33,7 +44,7 @@ services:
     environment:
       - ASPNETCORE_URLS=http://0.0.0.0:80
     ports:
-      - "6090:80"
+      - "6002:80"
     depends_on:
       - rabbitmq
 
@@ -45,7 +56,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       #- ASPNETCORE_URLS=http://0.0.0.0:80;https://0.0.0.0:443
     ports:
-      - "6080:80"
-      - "6081:443"
+      - "6000:80"
+      - "6001:443"
     depends_on:
       - rabbitmq

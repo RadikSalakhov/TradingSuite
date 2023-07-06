@@ -5,26 +5,26 @@ using Ticker.SignalrHub.IntegrationEvents;
 
 namespace Ticker.SignalrHub.IntegrationEventHandlers
 {
-    public class BinanceCryptoAssetPriceTickerIntegrationEventHandler : IIntegrationEventHandler<BinanceCryptoAssetPriceTickerIntegrationEvent>
+    public class AssetPriceTickerIntegrationEventHandler : IIntegrationEventHandler<AssetPriceTickerIntegrationEvent>
     {
         private readonly IHubContext<NotificationsHub> _hubContext;
-        private readonly ILogger<BinanceCryptoAssetPriceTickerIntegrationEventHandler> _logger;
+        private readonly ILogger<AssetPriceTickerIntegrationEventHandler> _logger;
 
-        public BinanceCryptoAssetPriceTickerIntegrationEventHandler(
+        public AssetPriceTickerIntegrationEventHandler(
             IHubContext<NotificationsHub> hubContext,
-            ILogger<BinanceCryptoAssetPriceTickerIntegrationEventHandler> logger)
+            ILogger<AssetPriceTickerIntegrationEventHandler> logger)
         {
             _hubContext = hubContext ?? throw new ArgumentNullException(nameof(hubContext));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task Handle(BinanceCryptoAssetPriceTickerIntegrationEvent integrationEvent)
+        public async Task Handle(AssetPriceTickerIntegrationEvent integrationEvent)
         {
             using (_logger.BeginScope(new List<KeyValuePair<string, object>> { new("IntegrationEventContext", integrationEvent.Id) }))
             {
                 _logger.LogInformation("Handling integration event: {IntegrationEventId} - ({@IntegrationEvent})", integrationEvent.Id, integrationEvent);
 
-                var dto = new AssetPriceDTO(integrationEvent.CryptoAsset, integrationEvent.QuoteCryptoAsset, integrationEvent.Price);
+                var dto = new AssetPriceDTO(integrationEvent.AssetType, integrationEvent.BaseAsset, integrationEvent.QuoteAsset, integrationEvent.Price);
 
                 await _hubContext.Clients.All.SendAsync(nameof(AssetPriceDTO), dto);
             }

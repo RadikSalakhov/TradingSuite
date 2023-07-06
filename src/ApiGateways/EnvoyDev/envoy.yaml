@@ -36,11 +36,17 @@ static_resources:
                   prefix: "/r"
                 route:                  
                   auto_host_rewrite: true
-                  prefix_rewrite: "/"                  
+                  prefix_rewrite: "/"
                   cluster: rabbitmq-cluster
               - match:
-                  prefix: "/hub"
+                  prefix: "/assets-api"
                 route:                  
+                  auto_host_rewrite: true
+                  prefix_rewrite: "/api"
+                  cluster: assets-api-cluster
+              - match:
+                  prefix: "/hub"
+                route:
                   auto_host_rewrite: true                  
                   cluster: ticker-signalrhub-cluster
                   timeout: 300s
@@ -67,6 +73,20 @@ static_resources:
                 address: rabbitmq
                 #address: 'rabbitmq-service.default'
                 port_value: 15672
+  - name: assets-api-cluster
+    type: LOGICAL_DNS
+    # Comment out the following line to test on v6 networks
+    dns_lookup_family: V4_ONLY
+    load_assignment:
+      cluster_name: assets-api-cluster
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: assets-api
+                #address: 'assets-api-service.default'
+                port_value: 80
   - name: ticker-signalrhub-cluster
     type: LOGICAL_DNS
     # Comment out the following line to test on v6 networks

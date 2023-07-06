@@ -92,7 +92,7 @@ namespace Binance.Worker
 
                     foreach (var priceTicker in priceTickers)
                     {
-                        var integrationEvent = new BinanceCryptoAssetPriceTickerIntegrationEvent(priceTicker.CryptoAsset, priceTicker.QuoteCryptoAsset, priceTicker.Price);
+                        var integrationEvent = new AssetPriceTickerIntegrationEvent("CRYPTO", priceTicker.CryptoAsset, priceTicker.QuoteCryptoAsset, priceTicker.Price);
                         _eventBus.Publish(integrationEvent);
                     }
                 }
