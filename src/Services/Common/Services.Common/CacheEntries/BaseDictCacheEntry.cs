@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace BlazorApp.Client.Services.ClientCacheEntries.Base
+﻿namespace Services.Common.CacheEntries
 {
     public abstract class BaseDictCacheEntry<TKey, TValue> : BaseCacheEntry<TValue>
         where TKey : notnull

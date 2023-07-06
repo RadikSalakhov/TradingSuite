@@ -46,16 +46,16 @@
 
 @code {
     [Parameter]
-    public string AssetId { get; set; } = string.Empty;
+    public string BaseAsset { get; set; } = string.Empty;
 
-    private decimal AssetPrice => ClientCache.AssetPrice.GetByKey(AssetId)?.Price ?? 0m;
+    private decimal AssetPrice => ClientCache.AssetPrice.GetByKeys("CRYPTO", BaseAsset)?.Price ?? 0m;
 
-    private EmaCrossEntity? EmaCrossA => ClientCache.EmaCross.Get(AssetId, "1s");
-    private EmaCrossEntity? EmaCrossB => ClientCache.EmaCross.Get(AssetId, "1m");
-    private EmaCrossEntity? EmaCrossC => ClientCache.EmaCross.Get(AssetId, "5m");
-    private EmaCrossEntity? EmaCrossD => ClientCache.EmaCross.Get(AssetId, "15m");
-    private EmaCrossEntity? EmaCrossE => ClientCache.EmaCross.Get(AssetId, "30m");
-    private EmaCrossEntity? EmaCrossF => ClientCache.EmaCross.Get(AssetId, "31h");
+    private EmaCrossEntity? EmaCrossA => ClientCache.EmaCross.GetByKeys(BaseAsset, "1s");
+    private EmaCrossEntity? EmaCrossB => ClientCache.EmaCross.GetByKeys(BaseAsset, "1m");
+    private EmaCrossEntity? EmaCrossC => ClientCache.EmaCross.GetByKeys(BaseAsset, "5m");
+    private EmaCrossEntity? EmaCrossD => ClientCache.EmaCross.GetByKeys(BaseAsset, "15m");
+    private EmaCrossEntity? EmaCrossE => ClientCache.EmaCross.GetByKeys(BaseAsset, "30m");
+    private EmaCrossEntity? EmaCrossF => ClientCache.EmaCross.GetByKeys(BaseAsset, "31h");
 
     private decimal SlopeShortA => EmaCrossA?.GetSlopeShortCoeff() ?? 0m;
     private decimal SlopeShortB => EmaCrossB?.GetSlopeShortCoeff() ?? 0m;
@@ -107,7 +107,7 @@
 
     private async Task emaCross_Updated(EmaCrossEntity? emaCross)
     {
-        if (emaCross == null || emaCross.AssetId == AssetId)
+        if (emaCross == null || emaCross.BaseAsset == BaseAsset)
             await InvokeAsync(StateHasChanged);
     }
 

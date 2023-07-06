@@ -1,17 +1,18 @@
-﻿using BlazorApp.Client.Services.ClientCacheEntries;
-
-namespace BlazorApp.Client.Entities
+﻿namespace BlazorApp.Client.Entities
 {
     public class AssetEntity
     {
-        public string AssetId { get; set; }
+        public string AssetType { get; }
+
+        public string BaseAsset { get; }
 
         public AssetPriceEntity AssetPrice { get; set; }
 
-        public AssetEntity(string assetId)
+        public AssetEntity(string assetType, string baseAsset)
         {
-            AssetId = assetId;
-            AssetPrice = new AssetPriceEntity(assetId, "USDT", 0m);
+            AssetType = assetType;
+            BaseAsset = baseAsset;
+            AssetPrice = new AssetPriceEntity(AssetType, BaseAsset, "USDT", 0m);
         }
     }
 }

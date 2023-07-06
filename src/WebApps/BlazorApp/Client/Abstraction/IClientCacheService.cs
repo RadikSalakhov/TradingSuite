@@ -13,6 +13,6 @@ namespace BlazorApp.Client.Abstraction
 
         ServerTimeCacheEntry ServerTime { get; }
 
-        AssetEntity GetAssetEntity(string assetId);
+        AssetEntity GetAssetEntity(string baseAsset);
     }
 }

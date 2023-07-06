@@ -4,7 +4,9 @@ namespace BlazorApp.Client.DTO
 {
     public class EmaCrossDTO
     {
-        public string AssetId { get; }
+        public string AssetType { get; }
+
+        public string BaseAsset { get; }
 
         public string Interval { get; }
 
@@ -16,9 +18,10 @@ namespace BlazorApp.Client.DTO
 
         public decimal PrevValueLong { get; }
 
-        public EmaCrossDTO(string assetId, string interval, decimal valueShort, decimal valueLong, decimal prevValueShort, decimal prevValueLong)
+        public EmaCrossDTO(string assetType, string baseAsset, string interval, decimal valueShort, decimal valueLong, decimal prevValueShort, decimal prevValueLong)
         {
-            AssetId = assetId;
+            AssetType = assetType;
+            BaseAsset = baseAsset;
             Interval = interval;
             ValueShort = valueShort;
             ValueLong = valueLong;
@@ -28,7 +31,7 @@ namespace BlazorApp.Client.DTO
 
         public EmaCrossEntity ToEntity()
         {
-            return new EmaCrossEntity(AssetId, Interval, ValueShort, ValueLong, PrevValueShort, PrevValueLong);
+            return new EmaCrossEntity(AssetType, BaseAsset, Interval, ValueShort, ValueLong, PrevValueShort, PrevValueLong);
         }
     }
 }

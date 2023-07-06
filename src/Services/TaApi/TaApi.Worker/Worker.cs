@@ -1,5 +1,6 @@
 using EventBus.Abstraction;
 using Microsoft.Extensions.Options;
+using Services.Common;
 using Services.Common.IntegrationEvents;
 using Services.Common.WorkerHandlers;
 using TaApi.Worker.Abstraction;
@@ -72,7 +73,8 @@ namespace TaApi.Worker
                         var emaCross = _emaProcessor.GetEmaCrossEntity(asset, indicatorsBatch.TAInterval);
                         if (emaCross != null)
                         {
-                            var integrationEvent = new IndicatorEmaCrossIntegrationEvent(emaCross.Asset, emaCross.TAInterval, emaCross.ValueShort, emaCross.ValueLong, emaCross.PrevValueShort, emaCross.PrevValueLong);
+                            var integrationEvent = new IndicatorEmaCrossIntegrationEvent(
+                                CommonConstants.CRYPTO, emaCross.Asset, emaCross.TAInterval, emaCross.ValueShort, emaCross.ValueLong, emaCross.PrevValueShort, emaCross.PrevValueLong);
                             _eventBus.Publish(integrationEvent);
                         }
                     }

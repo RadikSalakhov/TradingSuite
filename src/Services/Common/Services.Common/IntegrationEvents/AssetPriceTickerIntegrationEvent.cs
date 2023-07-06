@@ -19,5 +19,13 @@ namespace Services.Common.IntegrationEvents
             QuoteAsset = quoteAsset;
             Price = price;
         }
+
+        public bool IsValid()
+        {
+            return
+                !string.IsNullOrWhiteSpace(AssetType) &&
+                !string.IsNullOrWhiteSpace(BaseAsset) &&
+                !string.IsNullOrWhiteSpace(QuoteAsset);
+        }
     }
 }

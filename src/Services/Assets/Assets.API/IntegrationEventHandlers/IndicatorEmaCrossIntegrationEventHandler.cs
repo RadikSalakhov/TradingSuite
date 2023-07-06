@@ -1,25 +1,32 @@
-﻿using Assets.API.IntegrationEvents;
+﻿using Assets.API.Abstraction;
+using Assets.API.Entites;
 using EventBus.Abstraction;
-using Microsoft.AspNetCore.SignalR;
+using Services.Common;
+using Services.Common.IntegrationEvents;
 
 namespace Assets.API.IntegrationEventHandlers
 {
     public class IndicatorEmaCrossIntegrationEventHandler : IIntegrationEventHandler<IndicatorEmaCrossIntegrationEvent>
     {
-        public IndicatorEmaCrossIntegrationEventHandler()
+        private readonly ICacheService _cacheService;
+
+        public IndicatorEmaCrossIntegrationEventHandler(ICacheService cacheService)
         {
+            _cacheService = cacheService;
         }
 
         public async Task Handle(IndicatorEmaCrossIntegrationEvent integrationEvent)
         {
-            //using (_logger.BeginScope(new List<KeyValuePair<string, object>> { new("IntegrationEventContext", integrationEvent.Id) }))
-            //{
-            //    _logger.LogInformation("Handling integration event: {IntegrationEventId} - ({@IntegrationEvent})", integrationEvent.Id, integrationEvent);
+            if (integrationEvent == null || !integrationEvent.IsValid())
+                return;
 
-            //    var dto = new EmaCrossDTO(integrationEvent.BaseAsset, integrationEvent.Interval, integrationEvent.ValueShort, integrationEvent.ValueLong, integrationEvent.PrevValueShort, integrationEvent.PrevValueLong);
+            var asset = _cacheService.Asset.GetByKeys(integrationEvent.AssetType, integrationEvent.BaseAsset);
+            if (asset == null)
+                asset = new AssetEntity(integrationEvent.AssetType, integrationEvent.BaseAsset);
 
-            //    await _hubContext.Clients.All.SendAsync(nameof(EmaCrossDTO), dto);
-            //}
+            asset.UpdateEmaCross(integrationEvent.Interval, integrationEvent.ValueShort, integrationEvent.ValueLong, integrationEvent.PrevValueShort, integrationEvent.PrevValueLong);
+
+            await _cacheService.Asset.UpdateAsync(asset);
         }
     }
 }

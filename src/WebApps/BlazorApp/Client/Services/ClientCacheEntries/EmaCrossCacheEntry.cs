@@ -3,16 +3,16 @@ using BlazorApp.Client.Services.ClientCacheEntries.Base;
 
 namespace BlazorApp.Client.Services.ClientCacheEntries
 {
-    public class EmaCrossCacheEntry : BaseDictCacheEntry<string, EmaCrossEntity>
+    public class EmaCrossCacheEntry : BaseDoubleDictCacheEntry<string, string, EmaCrossEntity>
     {
-        public EmaCrossEntity? Get(string assetId, string interval)
+        protected override string GetKeyA(EmaCrossEntity value)
         {
-            return GetByKey($"{assetId} - {interval}");
+            return value.BaseAsset;
         }
 
-        protected override string GetKey(EmaCrossEntity value)
+        protected override string GetKeyB(EmaCrossEntity value)
         {
-            return value.Id;
+            return value.Interval;
         }
     }
 }

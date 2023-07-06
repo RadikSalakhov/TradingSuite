@@ -1,8 +1,9 @@
-﻿using EventBus.Events;
+﻿using Assets.API.Entites;
+using Services.Common;
 
-namespace Services.Common.IntegrationEvents
+namespace Assets.API.DTO
 {
-    public class IndicatorEmaCrossIntegrationEvent : IntegrationEvent
+    public class EmaCrossDTO
     {
         public string AssetType { get; }
 
@@ -18,7 +19,7 @@ namespace Services.Common.IntegrationEvents
 
         public decimal PrevValueLong { get; }
 
-        public IndicatorEmaCrossIntegrationEvent(string assetType, string baseAsset, string interval, decimal valueShort, decimal valueLong, decimal prevValueShort, decimal prevValueLong)
+        public EmaCrossDTO(string assetType, string baseAsset, string interval, decimal valueShort, decimal valueLong, decimal prevValueShort, decimal prevValueLong)
         {
             AssetType = assetType;
             BaseAsset = baseAsset;
@@ -29,12 +30,12 @@ namespace Services.Common.IntegrationEvents
             PrevValueLong = prevValueLong;
         }
 
-        public bool IsValid()
+        public static EmaCrossDTO FromEntity(EmaCrossEntity asset)
         {
-            return
-                !string.IsNullOrWhiteSpace(AssetType) &&
-                !string.IsNullOrWhiteSpace(BaseAsset) &&
-                !string.IsNullOrWhiteSpace(Interval);
+            if (asset == null)
+                throw new ArgumentNullException(nameof(asset));
+
+            return new EmaCrossDTO(asset.AssetType, asset.BaseAsset, asset.Interval, asset.ValueShort, asset.ValueLong, asset.PrevValueShort, asset.PrevValueLong);
         }
     }
 }

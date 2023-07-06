@@ -20,7 +20,7 @@
                 var itemStyle = string.Format(ItemStyleTemplate, curColumn, curColumn + 1, curRow, curRow + 1, RowHeight);
 
                 <div class="ts-item" style="@itemStyle">
-                    <AssetPage AssetId=@asset.AssetId />
+                    <AssetPage BaseAsset=@asset.BaseAsset />
                 </div>
 
                 curColumn++;
@@ -35,7 +35,7 @@
 </div>
 
 @code{
-    private IEnumerable<AssetPriceEntity> AssetPrices => ClientCache.AssetPrice.GetList().OrderBy(v => v.AssetId);
+    private IEnumerable<AssetPriceEntity> AssetPrices => ClientCache.AssetPrice.GetList().OrderBy(v => v.BaseAsset);
 
     private string HeightStr => $"{ClientSettings.WindowSize.ClientAreaHeight}px";
 

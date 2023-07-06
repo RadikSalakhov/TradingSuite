@@ -3,11 +3,11 @@ using BlazorApp.Client.Services.ClientCacheEntries.Base;
 
 namespace BlazorApp.Client.Services.ClientCacheEntries
 {
-    public class ServerTimeCacheEntry : BaseValueCacheEntry<DateTime, ServerTimeEntity>
+    public class ServerTimeCacheEntry : BaseValueCacheEntry<ServerTimeEntity>
     {
-        protected override DateTime GetKey(ServerTimeEntity value)
-        {
-            return value.ServerTime;
-        }
+        //protected DateTime GetKey(ServerTimeEntity value)
+        //{
+        //    return value.ServerTime;
+        //}
     }
 }

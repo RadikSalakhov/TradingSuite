@@ -2,9 +2,9 @@
 {
     public class EmaCrossEntity
     {
-        public string Id { get; }
+        public string AssetType { get; }
 
-        public string AssetId { get; }
+        public string BaseAsset { get; }
 
         public string Interval { get; }
 
@@ -16,16 +16,15 @@
 
         public decimal PrevValueLong { get; }
 
-        public EmaCrossEntity(string assetId, string interval, decimal valueShort, decimal valueLong, decimal prevValueShort, decimal prevValueLong)
+        public EmaCrossEntity(string assetType, string baseAsset, string interval, decimal valueShort, decimal valueLong, decimal prevValueShort, decimal prevValueLong)
         {
-            AssetId = assetId;
+            AssetType = assetType;
+            BaseAsset = baseAsset;
             Interval = interval;
             ValueShort = valueShort;
             ValueLong = valueLong;
             PrevValueShort = prevValueShort;
             PrevValueLong = prevValueLong;
-
-            Id = $"{AssetId} - {Interval}";
         }
 
         public decimal GetValueDiff()

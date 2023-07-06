@@ -1,6 +1,7 @@
 using Binance.Domain.Common;
 using Binance.Domain.Services;
 using EventBus.Abstraction;
+using Services.Common;
 using Services.Common.IntegrationEvents;
 using Services.Common.WorkerHandlers;
 
@@ -65,7 +66,8 @@ namespace Binance.Worker
                 var emaCross = _technicalIndicatorsService.GetEmaCrossEntity(cryptoAsset);
                 if (emaCross != null)
                 {
-                    var integrationEvent = new IndicatorEmaCrossIntegrationEvent(emaCross.CryptoAsset, emaCross.TAInterval, emaCross.ValueShort, emaCross.ValueLong, emaCross.PrevValueShort, emaCross.PrevValueLong);
+                    var integrationEvent = new IndicatorEmaCrossIntegrationEvent(
+                        CommonConstants.CRYPTO, emaCross.CryptoAsset, emaCross.TAInterval, emaCross.ValueShort, emaCross.ValueLong, emaCross.PrevValueShort, emaCross.PrevValueLong);
                     _eventBus.Publish(integrationEvent);
                 }
             }
@@ -91,7 +93,7 @@ namespace Binance.Worker
 
                     foreach (var priceTicker in priceTickers)
                     {
-                        var integrationEvent = new AssetPriceTickerIntegrationEvent("CRYPTO", priceTicker.CryptoAsset, priceTicker.QuoteCryptoAsset, priceTicker.Price);
+                        var integrationEvent = new AssetPriceTickerIntegrationEvent(CommonConstants.CRYPTO, priceTicker.CryptoAsset, priceTicker.QuoteCryptoAsset, priceTicker.Price);
                         _eventBus.Publish(integrationEvent);
                     }
                 }

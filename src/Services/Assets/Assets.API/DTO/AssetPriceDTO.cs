@@ -1,6 +1,7 @@
-﻿using BlazorApp.Client.Entities;
+﻿using Assets.API.Entites;
+using Services.Common;
 
-namespace BlazorApp.Client.DTO
+namespace Assets.API.DTO
 {
     public class AssetPriceDTO
     {
@@ -20,9 +21,12 @@ namespace BlazorApp.Client.DTO
             Price = price;
         }
 
-        public AssetPriceEntity ToEntity()
+        public static AssetPriceDTO FromEntity(AssetEntity asset)
         {
-            return new AssetPriceEntity(AssetType, BaseAsset, QuoteAsset, Price);
+            if (asset == null)
+                throw new ArgumentNullException(nameof(asset));
+
+            return new AssetPriceDTO(asset.AssetType, asset.BaseAsset, CommonConstants.USDT, asset.PriceUSDT);
         }
     }
 }

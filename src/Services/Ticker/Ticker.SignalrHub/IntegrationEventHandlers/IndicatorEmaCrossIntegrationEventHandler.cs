@@ -24,7 +24,9 @@ namespace Ticker.SignalrHub.IntegrationEventHandlers
             {
                 _logger.LogInformation("Handling integration event: {IntegrationEventId} - ({@IntegrationEvent})", integrationEvent.Id, integrationEvent);
 
-                var dto = new EmaCrossDTO(integrationEvent.BaseAsset, integrationEvent.Interval, integrationEvent.ValueShort, integrationEvent.ValueLong, integrationEvent.PrevValueShort, integrationEvent.PrevValueLong);
+                var dto = new EmaCrossDTO(
+                    integrationEvent.AssetType, integrationEvent.BaseAsset,
+                    integrationEvent.Interval, integrationEvent.ValueShort, integrationEvent.ValueLong, integrationEvent.PrevValueShort, integrationEvent.PrevValueLong);
 
                 await _hubContext.Clients.All.SendAsync(nameof(EmaCrossDTO), dto);
             }

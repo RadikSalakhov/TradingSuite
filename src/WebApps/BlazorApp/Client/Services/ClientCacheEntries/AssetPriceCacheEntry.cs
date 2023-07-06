@@ -3,11 +3,16 @@ using BlazorApp.Client.Services.ClientCacheEntries.Base;
 
 namespace BlazorApp.Client.Services.ClientCacheEntries
 {
-    public class AssetPriceCacheEntry : BaseDictCacheEntry<string, AssetPriceEntity>
+    public class AssetPriceCacheEntry : BaseDoubleDictCacheEntry<string, string, AssetPriceEntity>
     {
-        protected override string GetKey(AssetPriceEntity value)
+        protected override string GetKeyA(AssetPriceEntity value)
         {
-            return value.AssetId;
+            return value.AssetType;
+        }
+
+        protected override string GetKeyB(AssetPriceEntity value)
+        {
+            return value.BaseAsset;
         }
     }
 }

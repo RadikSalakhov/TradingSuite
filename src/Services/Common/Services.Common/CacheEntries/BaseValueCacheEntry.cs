@@ -1,4 +1,4 @@
-﻿namespace BlazorApp.Client.Services.ClientCacheEntries.Base
+﻿namespace Services.Common.CacheEntries
 {
     public abstract class BaseValueCacheEntry<TValue> : BaseCacheEntry<TValue>
         where TValue : class, new()
