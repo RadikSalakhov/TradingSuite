@@ -8,11 +8,6 @@ using Binance.Spot;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Binance.Infrastructure.Services
 {
@@ -58,6 +53,77 @@ namespace Binance.Infrastructure.Services
                 logBinanceClientException(exp);
                 throw;
             }
+        }
+
+        public async Task<IEnumerable<CryptoAsset>> GetSupportedCryptoAssets()
+        {
+            try
+            {
+                throwIfNotRegistered();
+
+                var resultList = new List<CryptoAsset>();
+
+                resultList.AddRange(getDefaultCryptoAssets());
+
+                //using var httpClient = getHttpClient();
+
+                //var resultJson = await getMarket(httpClient).ExchangeInformation(permissions: "SPOT");
+
+                //var exchangeInfo = JsonConvert.DeserializeObject<BinanceExchangeInfoDTO>(resultJson);
+                //if (exchangeInfo != null && exchangeInfo.Symbols != null)
+                //{
+                //    foreach (var symbol in exchangeInfo.Symbols)
+                //    {
+                //        if (symbol.QuoteAsset == CryptoAsset.USDT && symbol.IsSupported())
+                //        {
+                //            if (!resultList.Contains(symbol.BaseAsset))
+                //                resultList.Add(symbol.BaseAsset);
+                //        }
+                //    }
+                //}
+
+                return resultList;
+            }
+            catch (BinanceClientException exp)
+            {
+                logBinanceClientException(exp);
+                throw;
+            }
+        }
+
+        private static IEnumerable<CryptoAsset> getDefaultCryptoAssets()
+        {
+            yield return "ADA";
+            yield return "APT";
+            yield return "ARB";
+            yield return "ATOM";
+            yield return "AVAX";
+            yield return "BNB";
+            yield return "BTC";
+            yield return "CAKE";
+            yield return "CFX";
+            yield return "DOGE";
+            yield return "DOT";
+            yield return "ETH";
+            yield return "FIL";
+            yield return "FTM";
+            yield return "ICP";
+            yield return "ID";
+            yield return "INJ";
+            yield return "LINK";
+            yield return "LTC";
+            yield return "MANA";
+            yield return "MATIC";
+            yield return "OP";
+            yield return "RNDR";
+            yield return "SAND";
+            yield return "SHIB";
+            yield return "SOL";
+            yield return "TRX";
+            yield return "UNI";
+            yield return "XLM";
+            yield return "XMR";
+            yield return "XRP";
         }
 
         public async Task<IEnumerable<PriceTickerEntity>> GetPriceTickers(IEnumerable<CryptoAsset> cryptoAssets)

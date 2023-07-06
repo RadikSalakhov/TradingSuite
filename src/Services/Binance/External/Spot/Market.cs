@@ -65,8 +65,9 @@ namespace Binance.Spot
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="symbols"></param>
+        /// <param name="permissions"></param>
         /// <returns>Current exchange trading rules and symbol information.</returns>
-        public async Task<string> ExchangeInformation(string symbol = null, string symbols = null)
+        public async Task<string> ExchangeInformation(string symbol = null, string symbols = null, string permissions = null)
         {
             var result = await this.SendPublicAsync<string>(
                 EXCHANGE_INFORMATION,
@@ -75,6 +76,7 @@ namespace Binance.Spot
                 {
                     { "symbol", symbol },
                     { "symbols", symbols },
+                    { "permissions", permissions },
                 });
 
             return result;

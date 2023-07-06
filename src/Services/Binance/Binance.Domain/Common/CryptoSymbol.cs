@@ -26,9 +26,9 @@
             return CreateFromCryptoAssets(cryptoAsset, CryptoAsset.USDT);
         }
 
-        public static CryptoSymbol CreateFromCryptoAssets(CryptoAsset cryptoAsset, CryptoAsset baseCryptoAsset)
+        public static CryptoSymbol CreateFromCryptoAssets(CryptoAsset cryptoAsset, CryptoAsset quoteCryptoAsset)
         {
-            return new CryptoSymbol($"{cryptoAsset}{baseCryptoAsset}");
+            return new CryptoSymbol($"{cryptoAsset}{quoteCryptoAsset}");
         }
 
         public static Tuple<CryptoAsset, CryptoAsset>? TryParse(CryptoSymbol cryptoSymbol)

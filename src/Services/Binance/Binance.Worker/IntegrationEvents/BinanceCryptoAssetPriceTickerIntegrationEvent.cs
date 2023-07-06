@@ -6,14 +6,14 @@ namespace Binance.Worker.IntegrationEvents
     {
         public string CryptoAsset { get; }
 
-        public string BaseCryptoAsset { get; }
+        public string QuoteCryptoAsset { get; }
 
         public decimal Price { get; }
 
-        public BinanceCryptoAssetPriceTickerIntegrationEvent(string cryptoAsset, string baseCryptoAsset, decimal price)
+        public BinanceCryptoAssetPriceTickerIntegrationEvent(string cryptoAsset, string quoteCryptoAsset, decimal price)
         {
             CryptoAsset = cryptoAsset;
-            BaseCryptoAsset = baseCryptoAsset;
+            QuoteCryptoAsset = quoteCryptoAsset;
             Price = price;
         }
     }

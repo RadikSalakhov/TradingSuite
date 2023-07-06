@@ -34,12 +34,12 @@
                 return null;
 
             var cryptoAsset = parts[0];
-            var baseCryptoAsset = parts[1];
+            var quoteCryptoAsset = parts[1];
 
-            if (cryptoAsset == _EMPTY || baseCryptoAsset == _EMPTY)
+            if (cryptoAsset == _EMPTY || quoteCryptoAsset == _EMPTY)
                 return null;
 
-            return new Tuple<Asset, Asset>(cryptoAsset, baseCryptoAsset);
+            return new Tuple<Asset, Asset>(cryptoAsset, quoteCryptoAsset);
         }
     }
 }

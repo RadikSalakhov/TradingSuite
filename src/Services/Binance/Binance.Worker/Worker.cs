@@ -19,6 +19,8 @@ namespace Binance.Worker
 
         private readonly ITechnicalIndicatorsService _technicalIndicatorsService;
 
+        private readonly List<CryptoAsset> _supportedCryptoAssets = new List<CryptoAsset>();
+
         public Worker(ILogger<Worker> logger, IWorkerHandler workerHandler, IEventBus eventBus, IBinancePriceTickerService binancePriceTickerService, ITechnicalIndicatorsService technicalIndicatorsService)
         {
             _logger = logger;
@@ -72,15 +74,27 @@ namespace Binance.Worker
 
         private async Task onEvery500()
         {
-            {//Price Tickers
-                var priceTickers = await _binancePriceTickerService.GetPriceTickers(CryptoAsset.GetAll(skipUSDT: true));
-
-                _technicalIndicatorsService.AddPriceTickersToBuffer(priceTickers);
-
-                foreach (var priceTicker in priceTickers)
+            {//Supported CryptoAssets
+                if (!_supportedCryptoAssets.Any())
                 {
-                    var integrationEvent = new BinanceCryptoAssetPriceTickerIntegrationEvent(priceTicker.CryptoAsset, priceTicker.BaseCryptoAsset, priceTicker.Price);
-                    _eventBus.Publish(integrationEvent);
+                    var cryptoAssets = await _binancePriceTickerService.GetSupportedCryptoAssets();
+                    if (cryptoAssets.Any())
+                        _supportedCryptoAssets.AddRange(cryptoAssets);
+                }
+            }
+
+            {//Price Tickers
+                if (_supportedCryptoAssets.Any())
+                {
+                    var priceTickers = await _binancePriceTickerService.GetPriceTickers(_supportedCryptoAssets);
+
+                    _technicalIndicatorsService.AddPriceTickersToBuffer(priceTickers);
+
+                    foreach (var priceTicker in priceTickers)
+                    {
+                        var integrationEvent = new BinanceCryptoAssetPriceTickerIntegrationEvent(priceTicker.CryptoAsset, priceTicker.QuoteCryptoAsset, priceTicker.Price);
+                        _eventBus.Publish(integrationEvent);
+                    }
                 }
             }
         }

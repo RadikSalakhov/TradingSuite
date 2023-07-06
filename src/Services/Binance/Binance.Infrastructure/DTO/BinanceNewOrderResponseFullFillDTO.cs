@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Binance.Domain.Common;
+using Newtonsoft.Json;
 
 namespace Binance.Infrastructure.DTO
 {
-    public class BinanceNewOrderResponseFullFillDTO
+    public class BinanceNewOrderResponseFullFillDTO : BaseDTO
     {
         [JsonProperty("price")]
         public decimal Price { get; set; }

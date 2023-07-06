@@ -2,7 +2,7 @@
 
 namespace Binance.Domain.Entities
 {
-    public class AssetEntity : BaseEntity
+    public class UserAssetEntity : BaseEntity
     {
         public CryptoAsset CryptoAsset { get; set; }
 
@@ -24,7 +24,7 @@ namespace Binance.Domain.Entities
 
         public override string GetDescription()
         {
-            return $"{CryptoAsset}: {CryptoAsset.GetAmountFormatted(CryptoAsset, Free)}";
+            return $"{CryptoAsset}: {CryptoAsset}";
         }
     }
 }

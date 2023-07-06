@@ -35,7 +35,7 @@
 </div>
 
 @code{
-    private IEnumerable<AssetPriceEntity> AssetPrices => ClientCache.AssetPrice.GetList();
+    private IEnumerable<AssetPriceEntity> AssetPrices => ClientCache.AssetPrice.GetList().OrderBy(v => v.AssetId);
 
     private string HeightStr => $"{ClientSettings.WindowSize.ClientAreaHeight}px";
 

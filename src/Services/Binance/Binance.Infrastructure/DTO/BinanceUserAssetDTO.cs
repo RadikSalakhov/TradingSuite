@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Binance.Infrastructure.DTO
 {
-    public class BinanceAssetDTO : BaseDTO<AssetEntity>
+    public class BinanceUserAssetDTO : BaseDTO<UserAssetEntity>
     {
         [JsonProperty("asset")]
         public string Asset { get; set; }
@@ -27,9 +27,9 @@ namespace Binance.Infrastructure.DTO
         [JsonProperty("btcValuation")]
         public decimal BtcValuation { get; set; }
 
-        public override AssetEntity GetEntity()
+        public override UserAssetEntity GetEntity()
         {
-            var entity = BaseEntity.CreateNew<AssetEntity>();
+            var entity = BaseEntity.CreateNew<UserAssetEntity>();
 
             entity.CryptoAsset = Asset;
             entity.Free = Free;
