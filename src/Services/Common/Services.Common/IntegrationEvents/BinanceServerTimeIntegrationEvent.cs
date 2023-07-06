@@ -1,6 +1,6 @@
 ﻿using EventBus.Events;
 
-namespace Ticker.SignalrHub.IntegrationEvents
+namespace Services.Common.IntegrationEvents
 {
     public class BinanceServerTimeIntegrationEvent : IntegrationEvent
     {

@@ -1,7 +1,7 @@
 ﻿using EventBus.Abstraction;
 using Microsoft.AspNetCore.SignalR;
+using Services.Common.IntegrationEvents;
 using Ticker.SignalrHub.DTO;
-using Ticker.SignalrHub.IntegrationEvents;
 
 namespace Ticker.SignalrHub.IntegrationEventHandlers
 {

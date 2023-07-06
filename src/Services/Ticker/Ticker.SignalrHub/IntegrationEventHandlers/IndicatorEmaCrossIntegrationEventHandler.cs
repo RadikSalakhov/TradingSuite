@@ -1,7 +1,7 @@
 ﻿using EventBus.Abstraction;
 using Microsoft.AspNetCore.SignalR;
+using Services.Common.IntegrationEvents;
 using Ticker.SignalrHub.DTO;
-using Ticker.SignalrHub.IntegrationEvents;
 
 namespace Ticker.SignalrHub.IntegrationEventHandlers
 {
@@ -24,7 +24,7 @@ namespace Ticker.SignalrHub.IntegrationEventHandlers
             {
                 _logger.LogInformation("Handling integration event: {IntegrationEventId} - ({@IntegrationEvent})", integrationEvent.Id, integrationEvent);
 
-                var dto = new EmaCrossDTO(integrationEvent.AssetId, integrationEvent.Interval, integrationEvent.ValueShort, integrationEvent.ValueLong, integrationEvent.PrevValueShort, integrationEvent.PrevValueLong);
+                var dto = new EmaCrossDTO(integrationEvent.BaseAsset, integrationEvent.Interval, integrationEvent.ValueShort, integrationEvent.ValueLong, integrationEvent.PrevValueShort, integrationEvent.PrevValueLong);
 
                 await _hubContext.Clients.All.SendAsync(nameof(EmaCrossDTO), dto);
             }

@@ -1,10 +1,10 @@
 using EventBus.Abstraction;
 using Microsoft.Extensions.Options;
+using Services.Common.IntegrationEvents;
 using Services.Common.WorkerHandlers;
 using TaApi.Worker.Abstraction;
 using TaApi.Worker.Configuration;
 using TaApi.Worker.Data;
-using TaApi.Worker.IntegrationEvents;
 
 namespace TaApi.Worker
 {

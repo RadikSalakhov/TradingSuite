@@ -1,6 +1,6 @@
 ﻿using EventBus.Events;
 
-namespace Binance.Worker.IntegrationEvents
+namespace Services.Common.IntegrationEvents
 {
     public class AssetPriceTickerIntegrationEvent : IntegrationEvent
     {

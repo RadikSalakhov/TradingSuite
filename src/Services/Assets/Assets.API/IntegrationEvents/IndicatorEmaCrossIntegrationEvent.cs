@@ -1,10 +1,10 @@
 ﻿using EventBus.Events;
 
-namespace Binance.Worker.IntegrationEvents
+namespace Assets.API.IntegrationEvents
 {
     public class IndicatorEmaCrossIntegrationEvent : IntegrationEvent
     {
-        public string AssetId { get; }
+        public string BaseAsset { get; }
 
         public string Interval { get; }
 
@@ -16,9 +16,9 @@ namespace Binance.Worker.IntegrationEvents
 
         public decimal PrevValueLong { get; }
 
-        public IndicatorEmaCrossIntegrationEvent(string assetId, string interval, decimal valueShort, decimal valueLong, decimal prevValueShort, decimal prevValueLong)
+        public IndicatorEmaCrossIntegrationEvent(string baseAsset, string interval, decimal valueShort, decimal valueLong, decimal prevValueShort, decimal prevValueLong)
         {
-            AssetId = assetId;
+            BaseAsset = baseAsset;
             Interval = interval;
             ValueShort = valueShort;
             ValueLong = valueLong;

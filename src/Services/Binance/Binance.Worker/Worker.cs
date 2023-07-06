@@ -1,8 +1,7 @@
-using Binance.Worker.IntegrationEvents;
 using Binance.Domain.Common;
 using Binance.Domain.Services;
-using Binance.Infrastructure.Services;
 using EventBus.Abstraction;
+using Services.Common.IntegrationEvents;
 using Services.Common.WorkerHandlers;
 
 namespace Binance.Worker

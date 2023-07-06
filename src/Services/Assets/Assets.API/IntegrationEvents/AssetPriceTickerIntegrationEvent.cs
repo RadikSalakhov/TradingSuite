@@ -1,6 +1,6 @@
 ﻿using EventBus.Events;
 
-namespace Ticker.SignalrHub.IntegrationEvents
+namespace Assets.API.IntegrationEvents
 {
     public class AssetPriceTickerIntegrationEvent : IntegrationEvent
     {
