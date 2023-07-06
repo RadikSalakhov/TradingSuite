@@ -76,7 +76,7 @@ namespace BlazorApp.Client.Hubs
                 await _clientCacheService.Asset.UpdateAssetPriceAsync(dto.AssetType, dto.BaseAsset, dto.QuoteAsset, dto.Price);
             });
 
-            _hubConnection.On<EmaCrossDTO>(nameof(EmaCrossDTO), async dto => await _clientCacheService.Asset.UpdateEmaCross(dto.ToEntity()));
+            _hubConnection.On<EmaCrossDTO>(nameof(EmaCrossDTO), async dto => await _clientCacheService.Asset.UpdateEmaCrossAsync(dto.ToEntity()));
 
             //_hubConnection.On<IEnumerable<PriceTickerEntity>>(TradingHubMessage.PriceTickers, entities => TradingServiceClient.Cache.UpdatePriceTickers(entities));
 

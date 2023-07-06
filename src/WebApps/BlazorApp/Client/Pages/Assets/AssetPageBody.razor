@@ -50,7 +50,7 @@
 
     private string AssetType => "CRYPTO";
 
-    private AssetEntity Asset => ClientCache.Asset.GetByKeys(AssetType, BaseAsset) ?? new AssetEntity(AssetType, BaseAsset);
+    private AssetEntity Asset => ClientCache.Asset.GetAssetWithInitialization(AssetType, BaseAsset) ?? new AssetEntity(AssetType, BaseAsset);
 
     private decimal AssetPrice => Asset.PriceUSDT;
 
