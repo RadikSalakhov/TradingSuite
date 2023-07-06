@@ -15,14 +15,14 @@ services:
   binance-worker:    
     build:
       context: .
-      dockerfile: Services/Binance/Binance.BackgroundTasks/Dockerfile    
+      dockerfile: Services/Binance/Binance.Worker/Dockerfile
     depends_on:
       - rabbitmq
 
   taapi-worker:    
     build:
       context: .
-      dockerfile: Services/TaApi/TaApi.BackgroundTasks/Dockerfile
+      dockerfile: Services/TaApi/TaApi.Worker/Dockerfile
     depends_on:
       - rabbitmq
 
