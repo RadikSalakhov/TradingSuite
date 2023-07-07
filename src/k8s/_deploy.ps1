@@ -9,6 +9,9 @@ Add-Content $target_file $separator
 Get-Content taapi-worker.yaml | Add-Content $target_file
 
 Add-Content $target_file $separator
+Get-Content assets-api.yaml | Add-Content $target_file
+
+Add-Content $target_file $separator
 Get-Content ticker-signalrhub.yaml | Add-Content $target_file
 
 Add-Content $target_file $separator

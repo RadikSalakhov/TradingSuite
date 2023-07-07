@@ -5,9 +5,7 @@ services:
     image: radiksalakhov/ts-gateway:${PROD_VERSION}
     build:
       context: .
-      dockerfile: ApiGateways/EnvoyProd/Dockerfile
-    volumes:
-      - ./ApiGateways/EnvoyProd/envoy.yaml:/etc/envoy/envoy.yaml
+      dockerfile: ApiGateways/EnvoyProd/Dockerfile    
 
   assets-api:
     image: radiksalakhov/assets-api:${PROD_VERSION}

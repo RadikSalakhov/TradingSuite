@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: assets-api-service
+spec:
+  selector:
+    app: assets-api
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      name: assets-api-port-http
+    # - protocol: TCP
+    #   port: 443
+    #   targetPort: 443
+    #   name: assets-api-port-https
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assets-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assets-api
+  template:
+    metadata:
+      labels:
+        app: assets-api
+    spec:
+      containers:
+        - name: assets-api
+          image: radiksalakhov/assets-api:{PROD_VERSION}
+          imagePullPolicy: Always
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: ASPNETCORE_URLS
+              value: http://0.0.0.0:80
+              #value: http://0.0.0.0:80;https://0.0.0.0:443
+            - name: ConnectionStrings__EventBus
+              value: 'rabbitmq-service.default'

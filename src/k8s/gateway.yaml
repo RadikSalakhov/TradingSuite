@@ -2,15 +2,23 @@ apiVersion: v1
 kind: Service
 metadata:
   name: gateway-service
+  #annotations:
+  # service.beta.kubernetes.io/azure-load-balancer-ipv4: 20.157.115.118
+  # service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
   selector:
     app: gateway
   type: LoadBalancer
+  loadBalancerIP: 195.20.246.216
   ports:        
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8000
       name: gateway-port
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      name: gateway-admin-port    
 ---
 apiVersion: apps/v1
 kind: Deployment
