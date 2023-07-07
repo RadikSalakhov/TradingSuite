@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: taapi-worker
-          image: radiksalakhov/ts-taapi-worker:prod
+          image: radiksalakhov/ts-taapi-worker:{PROD_VERSION}
           imagePullPolicy: Always
           env:
             - name: DOTNET_ENVIRONMENT

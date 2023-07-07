@@ -4,8 +4,8 @@ namespace BlazorApp.Client.Services.ClientSettingsEntries
 {
     public class WindowSizeClientSettingsEntry : BaseClientSettingsEntry<Size>
     {
-        private const decimal REF_ASSET_ITEM_WIDTH = 200m;//350m
-        private const decimal REF_ASSET_ITEM_HEIGHT = 150m;//175m
+        private const decimal REF_ASSET_ITEM_WIDTH = 350m;//350m
+        private const decimal REF_ASSET_ITEM_HEIGHT = 175m;//175m
 
         public int ClientAreaHeight => Value.Height - 100;
 

@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: blazorapp
-          image: radiksalakhov/ts-blazorapp:prod
+          image: radiksalakhov/ts-blazorapp:{PROD_VERSION}
           imagePullPolicy: Always
           env:
             - name: ASPNETCORE_ENVIRONMENT

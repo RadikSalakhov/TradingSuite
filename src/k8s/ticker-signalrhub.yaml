@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: ticker-signalrhub
-          image: radiksalakhov/ts-ticker-signalrhub:prod
+          image: radiksalakhov/ts-ticker-signalrhub:{PROD_VERSION}
           imagePullPolicy: Always
           env:
             - name: ASPNETCORE_ENVIRONMENT

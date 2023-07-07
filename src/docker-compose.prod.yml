@@ -2,29 +2,32 @@ version: '3.4'
 
 services:
   gateway:
-    image: radiksalakhov/ts-gateway:prod
+    image: radiksalakhov/ts-gateway:${PROD_VERSION}
     build:
       context: .
       dockerfile: ApiGateways/EnvoyProd/Dockerfile
-
-  binance-worker:
-    image: radiksalakhov/ts-binance-worker:prod
-    environment:
-      - DOTNET_ENVIRONMENT=Development
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ./ApiGateways/EnvoyProd/envoy.yaml:/etc/envoy/envoy.yaml
+
+  assets-api:
+    image: radiksalakhov/assets-api:${PROD_VERSION}
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      
+  binance-worker:
+    image: radiksalakhov/ts-binance-worker:${PROD_VERSION}
+    environment:
+      - DOTNET_ENVIRONMENT=Development    
 
   taapi-worker:
-    image: radiksalakhov/ts-taapi-worker:prod
+    image: radiksalakhov/ts-taapi-worker:${PROD_VERSION}
     environment:
-      - DOTNET_ENVIRONMENT=Development
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - DOTNET_ENVIRONMENT=Development    
 
   ticker-signalrhub:
-    image: radiksalakhov/ts-ticker-signalrhub:prod
+    image: radiksalakhov/ts-ticker-signalrhub:${PROD_VERSION}    
 
   blazorapp:
-    image: radiksalakhov/ts-blazorapp:prod
+    image: radiksalakhov/ts-blazorapp:${PROD_VERSION}
     environment:
       - ASPNETCORE_ENVIRONMENT=Development     
