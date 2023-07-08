@@ -39,6 +39,8 @@ spec:
               value: Development
             - name: ASPNETCORE_URLS
               value: http://0.0.0.0:80
-              #value: http://0.0.0.0:80;https://0.0.0.0:443
+              #value: http://0.0.0.0:80;https://0.0.0.0:443            
             - name: ConnectionStrings__EventBus
               value: 'rabbitmq-service.default'
+            - name: AssetsAPIOptions__BinanceWorkerApiGrpc
+              value: 'http://binance-worker.default:90'

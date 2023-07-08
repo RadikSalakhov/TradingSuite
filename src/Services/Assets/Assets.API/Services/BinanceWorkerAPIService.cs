@@ -15,7 +15,9 @@ namespace Assets.API.Services
         {
             var response = await _client.GetBinanceAssetsAsync(new BinanceWorkerAPI.BinanceAssetsRequest());
 
-            return response.AssetBase;
+            return response != null
+                ? response.AssetBase
+                : new string[0];
         }
     }
 }
