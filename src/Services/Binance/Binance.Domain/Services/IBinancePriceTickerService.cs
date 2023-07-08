@@ -12,7 +12,9 @@ namespace Binance.Domain.Services
     {
         Task<ServerTimeEntity> GetServerTime();
 
-        Task<IEnumerable<CryptoAsset>> GetSupportedCryptoAssets();
+        Task<IEnumerable<CryptoAsset>> GetAllSupportedCryptoAssets();
+
+        Task<IEnumerable<CryptoAsset>> GetCurrentCryptoAssets();
 
         Task<IEnumerable<PriceTickerEntity>> GetPriceTickers(IEnumerable<CryptoAsset> cryptoAssets);
 

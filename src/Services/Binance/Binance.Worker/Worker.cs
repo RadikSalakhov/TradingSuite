@@ -1,9 +1,9 @@
-using Binance.Domain.Common;
+﻿using Binance.Domain.Common;
 using Binance.Domain.Services;
 using EventBus.Abstraction;
-using Services.Common;
 using Services.Common.IntegrationEvents;
 using Services.Common.WorkerHandlers;
+using Services.Common;
 
 namespace Binance.Worker
 {
@@ -78,7 +78,7 @@ namespace Binance.Worker
             {//Supported CryptoAssets
                 if (!_supportedCryptoAssets.Any())
                 {
-                    var cryptoAssets = await _binancePriceTickerService.GetSupportedCryptoAssets();
+                    var cryptoAssets = await _binancePriceTickerService.GetCurrentCryptoAssets();
                     if (cryptoAssets.Any())
                         _supportedCryptoAssets.AddRange(cryptoAssets);
                 }

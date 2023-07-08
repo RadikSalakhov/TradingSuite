@@ -55,7 +55,7 @@ namespace Binance.Infrastructure.Services
             }
         }
 
-        public async Task<IEnumerable<CryptoAsset>> GetSupportedCryptoAssets()
+        public async Task<IEnumerable<CryptoAsset>> GetAllSupportedCryptoAssets()
         {
             try
             {
@@ -63,24 +63,22 @@ namespace Binance.Infrastructure.Services
 
                 var resultList = new List<CryptoAsset>();
 
-                resultList.AddRange(getDefaultCryptoAssets());
+                using var httpClient = getHttpClient();
 
-                //using var httpClient = getHttpClient();
+                var resultJson = await getMarket(httpClient).ExchangeInformation(permissions: "SPOT");
 
-                //var resultJson = await getMarket(httpClient).ExchangeInformation(permissions: "SPOT");
-
-                //var exchangeInfo = JsonConvert.DeserializeObject<BinanceExchangeInfoDTO>(resultJson);
-                //if (exchangeInfo != null && exchangeInfo.Symbols != null)
-                //{
-                //    foreach (var symbol in exchangeInfo.Symbols)
-                //    {
-                //        if (symbol.QuoteAsset == CryptoAsset.USDT && symbol.IsSupported())
-                //        {
-                //            if (!resultList.Contains(symbol.BaseAsset))
-                //                resultList.Add(symbol.BaseAsset);
-                //        }
-                //    }
-                //}
+                var exchangeInfo = JsonConvert.DeserializeObject<BinanceExchangeInfoDTO>(resultJson);
+                if (exchangeInfo != null && exchangeInfo.Symbols != null)
+                {
+                    foreach (var symbol in exchangeInfo.Symbols)
+                    {
+                        if (symbol.QuoteAsset == CryptoAsset.USDT && symbol.IsSupported())
+                        {
+                            if (!resultList.Contains(symbol.BaseAsset))
+                                resultList.Add(symbol.BaseAsset);
+                        }
+                    }
+                }
 
                 return resultList;
             }
@@ -89,6 +87,11 @@ namespace Binance.Infrastructure.Services
                 logBinanceClientException(exp);
                 throw;
             }
+        }
+
+        public async Task<IEnumerable<CryptoAsset>> GetCurrentCryptoAssets()
+        {
+            return getDefaultCryptoAssets();
         }
 
         private static IEnumerable<CryptoAsset> getDefaultCryptoAssets()

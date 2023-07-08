@@ -10,7 +10,7 @@ namespace Binance.Domain.Entities
 
         public decimal BtcValuation { get; set; }
 
-        public AssetStateEntity? AssetState { get; set; }
+        //public AssetStateEntity? AssetState { get; set; }
 
         public decimal GetUSDTValuation(decimal assetPrice)
         {

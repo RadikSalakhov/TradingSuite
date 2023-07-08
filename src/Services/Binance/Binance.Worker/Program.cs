@@ -2,15 +2,14 @@ using Binance.Worker;
 using Binance.Infrastructure.Extensions;
 using Services.Common.Extensions;
 
-IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((hostContext, services) =>
-    {
-        services.AddServiceDefaults(hostContext.Configuration);
+var builder = WebApplication.CreateBuilder(args);
 
-        services.AddBinanceServices(hostContext.Configuration);
+builder.Services.AddServiceDefaults(builder.Configuration);
 
-        services.AddHostedService<Worker>();
-    })
-    .Build();
+builder.Services.AddBinanceServices(builder.Configuration);
 
-host.Run();
+builder.Services.AddHostedService<Worker>();
+
+var app = builder.Build();
+
+app.Run();
