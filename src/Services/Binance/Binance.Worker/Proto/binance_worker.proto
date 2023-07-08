@@ -1,0 +1,16 @@
+﻿syntax = "proto3";
+
+package BinanceWorkerAPI;
+
+message BinanceAssetsRequest {
+	int32 id = 1;
+}
+
+message BinanceAssetsResponse {	
+	repeated string assetBase = 1;    
+}
+
+service BinanceWorker {
+  rpc GetBinanceAssets (BinanceAssetsRequest) returns (BinanceAssetsResponse) {   
+  }
+}

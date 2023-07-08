@@ -9,10 +9,12 @@ namespace Assets.API.Controllers
     public class AssetsController : ControllerBase
     {
         private readonly ICacheService _cacheService;
+        private readonly IBinanceWorkerAPIService _binanceWorkerAPIService;
 
-        public AssetsController(ICacheService cacheService)
+        public AssetsController(ICacheService cacheService, IBinanceWorkerAPIService binanceWorkerAPIService)
         {
             _cacheService = cacheService;
+            _binanceWorkerAPIService = binanceWorkerAPIService;
         }
 
         [HttpGet("get-asset-price")]
@@ -44,6 +46,14 @@ namespace Assets.API.Controllers
                 dtos.Add(EmaCrossDTO.FromEntity(entity));
 
             return Ok(dtos);
+        }
+
+        [HttpGet("get-test")]
+        public async Task<ActionResult<IEnumerable<string>>> GetTest()
+        {
+            var result = await _binanceWorkerAPIService.GetBinanceAssets();
+
+            return Ok(result);
         }
     }
 }

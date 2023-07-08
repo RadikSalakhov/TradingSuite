@@ -18,6 +18,7 @@ services:
       dockerfile: Services/Assets/Assets.API/Dockerfile
     environment:
       - ASPNETCORE_URLS=http://0.0.0.0:80
+      - AssetsAPIOptions__BinanceWorkerApiGrpc=http://binance-worker:90
     ports:
       - "6004:80"
     depends_on:
@@ -27,6 +28,9 @@ services:
     build:
       context: .
       dockerfile: Services/Binance/Binance.Worker/Dockerfile
+    environment:
+      - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:90
+      - Kestrel__Endpoints__GRPC__Protocols=Http2    
     depends_on:
       - rabbitmq
 

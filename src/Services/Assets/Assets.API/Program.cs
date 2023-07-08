@@ -1,4 +1,5 @@
 using Assets.API.Abstraction;
+using Assets.API.Extensions;
 using Assets.API.IntegrationEventHandlers;
 using Assets.API.Services;
 using EventBus.Abstraction;
@@ -14,9 +15,6 @@ builder.Services.AddServiceDefaults(builder.Configuration);
 
 builder.Services.AddSignalR();
 
-builder.Services.AddSingleton<IIntegrationEventHandler<AssetPriceTickerIntegrationEvent>, AssetPriceTickerIntegrationEventHandler>();
-builder.Services.AddSingleton<IIntegrationEventHandler<IndicatorEmaCrossIntegrationEvent>, IndicatorEmaCrossIntegrationEventHandler>();
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: corsPolicyName,
@@ -29,9 +27,13 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddGrpcServices(builder.Configuration);
+
+builder.Services.AddSingleton<IIntegrationEventHandler<AssetPriceTickerIntegrationEvent>, AssetPriceTickerIntegrationEventHandler>();
+builder.Services.AddSingleton<IIntegrationEventHandler<IndicatorEmaCrossIntegrationEvent>, IndicatorEmaCrossIntegrationEventHandler>();
 
 builder.Services.AddSingleton<ICacheService, CacheService>();
 
