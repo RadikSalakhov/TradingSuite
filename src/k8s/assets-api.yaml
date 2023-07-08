@@ -43,4 +43,4 @@ spec:
             - name: ConnectionStrings__EventBus
               value: 'rabbitmq-service.default'
             - name: AssetsAPIOptions__BinanceWorkerApiGrpc
-              value: 'http://binance-worker.default:90'
+              value: http://binance-worker-service.default:90

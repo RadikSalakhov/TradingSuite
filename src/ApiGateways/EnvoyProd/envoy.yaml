@@ -32,12 +32,12 @@ static_resources:
             - name: local_service
               domains: ["*"]
               routes:              
-              - match:
-                  prefix: "/r"
-                route:                  
-                  auto_host_rewrite: true
-                  prefix_rewrite: "/"
-                  cluster: rabbitmq-cluster
+              # - match:
+              #     prefix: "/r"
+              #   route:                  
+              #     auto_host_rewrite: true
+              #     prefix_rewrite: "/"
+              #     cluster: rabbitmq-cluster
               - match:
                   prefix: "/assets-api"
                 route:                  
@@ -59,19 +59,18 @@ static_resources:
                   auto_host_rewrite: true                  
                   cluster: blazorapp-cluster
   clusters:  
-  - name: rabbitmq-cluster
-    type: LOGICAL_DNS
-    # Comment out the following line to test on v6 networks
-    dns_lookup_family: V4_ONLY
-    load_assignment:
-      cluster_name: rabbitmq-cluster
-      endpoints:
-      - lb_endpoints:
-        - endpoint:
-            address:
-              socket_address:                
-                address: 'rabbitmq-service.default'
-                port_value: 15672
+  # - name: rabbitmq-cluster
+  #   type: LOGICAL_DNS    
+  #   dns_lookup_family: V4_ONLY
+  #   load_assignment:
+  #     cluster_name: rabbitmq-cluster
+  #     endpoints:
+  #     - lb_endpoints:
+  #       - endpoint:
+  #           address:
+  #             socket_address:                
+  #               address: 'rabbitmq-service.default'
+  #               port_value: 15672
   - name: assets-api-cluster
     type: LOGICAL_DNS
     # Comment out the following line to test on v6 networks
