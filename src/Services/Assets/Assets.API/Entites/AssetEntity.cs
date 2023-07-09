@@ -8,18 +8,14 @@
 
         public string BaseAsset { get; }
 
+        public decimal LotStepSize { get; set; }
+
         public decimal PriceUSDT { get; set; }
 
         public AssetEntity(string assetType, string baseAsset)
-            : this(assetType, baseAsset, 0m)
-        {
-        }
-
-        public AssetEntity(string assetType, string baseAsset, decimal priceUSDT)
         {
             AssetType = assetType;
             BaseAsset = baseAsset;
-            PriceUSDT = priceUSDT;
         }
 
         public IEnumerable<EmaCrossEntity> GetEmaCrossEntities()

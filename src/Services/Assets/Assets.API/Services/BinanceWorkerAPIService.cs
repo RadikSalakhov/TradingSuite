@@ -1,4 +1,6 @@
 ﻿using Assets.API.Abstraction;
+using Assets.API.Entites;
+using Services.Common;
 
 namespace Assets.API.Services
 {
@@ -11,13 +13,22 @@ namespace Assets.API.Services
             _client = client;
         }
 
-        public async Task<IEnumerable<string>> GetBinanceAssets()
+        public async Task<IEnumerable<AssetEntity>> GetBinanceAssets()
         {
-            var response = await _client.GetBinanceAssetsAsync(new BinanceWorkerAPI.BinanceAssetsRequest());
+            var response = await _client.GetBinanceAssetsAsync(new Google.Protobuf.WellKnownTypes.Empty());
+            if (response == null || response.Assets == null)
+                return Array.Empty<AssetEntity>();
 
-            return response != null
-                ? response.AssetBase
-                : new string[0];
+            var result = new List<AssetEntity>();
+
+            foreach (var binanceAsset in response.Assets)
+            {
+                var asset = new AssetEntity(binanceAsset.AssetType, binanceAsset.BaseAsset);
+                asset.LotStepSize = CommonUtilities.ToDecimal(binanceAsset.LotStepSize.Units, binanceAsset.LotStepSize.Nanos);
+                result.Add(asset);
+            }
+
+            return result;
         }
     }
 }

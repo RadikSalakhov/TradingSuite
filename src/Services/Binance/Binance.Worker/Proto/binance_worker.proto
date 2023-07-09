@@ -1,16 +1,27 @@
 ﻿syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 package BinanceWorkerAPI;
 
-message BinanceAssetsRequest {
-	int32 id = 1;
+//https://visualrecode.com/blog/csharp-decimals-in-grpc/
+message DecimalValue {	  
+  int64 units = 1;
+  int32 nanos = 2;
 }
 
-message BinanceAssetsResponse {	
-	repeated string assetBase = 1;    
+message BinanceAsset {
+	string AssetType = 1;
+	string baseAsset = 2;
+	DecimalValue lotStepSize = 3;
+
+}
+
+message GetBinanceAssetsResponse {	
+	repeated BinanceAsset assets = 1;    
 }
 
 service BinanceWorker {
-  rpc GetBinanceAssets (BinanceAssetsRequest) returns (BinanceAssetsResponse) {   
+  rpc GetBinanceAssets (google.protobuf.Empty) returns (GetBinanceAssetsResponse) {   
   }
 }

@@ -1,5 +1,6 @@
 ﻿using Assets.API.Abstraction;
 using Assets.API.DTO;
+using Assets.API.Entites;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assets.API.Controllers
@@ -49,7 +50,7 @@ namespace Assets.API.Controllers
         }
 
         [HttpGet("get-test")]
-        public async Task<ActionResult<IEnumerable<string>>> GetTest()
+        public async Task<ActionResult<IEnumerable<AssetEntity>>> GetTest()
         {
             var result = await _binanceWorkerAPIService.GetBinanceAssets();
 

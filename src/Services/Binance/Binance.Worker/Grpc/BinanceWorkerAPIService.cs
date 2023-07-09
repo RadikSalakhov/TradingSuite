@@ -1,10 +1,12 @@
 ﻿using Binance.Domain.Services;
 using BinanceWorkerAPI;
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
+using Services.Common;
 
 namespace Binance.Worker.Grpc
 {
-    public class BinanceWorkerAPIService : BinanceWorkerAPI.BinanceWorker.BinanceWorkerBase
+    public class BinanceWorkerAPIService : BinanceWorker.BinanceWorkerBase
     {
         private readonly IBinancePriceTickerService _binancePriceTickerService;
         private readonly ILogger<BinanceWorkerAPIService> _logger;
@@ -15,7 +17,7 @@ namespace Binance.Worker.Grpc
             _logger = logger;
         }
 
-        public override async Task<BinanceAssetsResponse> GetBinanceAssets(BinanceAssetsRequest request, ServerCallContext context)
+        public override async Task<GetBinanceAssetsResponse> GetBinanceAssets(Empty request, ServerCallContext context)
         {
             try
             {
@@ -31,10 +33,28 @@ namespace Binance.Worker.Grpc
                 else
                     _logger.LogInformation("Assets: NULL");
 
-                var result = new BinanceAssetsResponse();
+                var result = new GetBinanceAssetsResponse();
 
                 if (assets != null && assets.Any())
-                    result.AssetBase.AddRange(assets.Select(v => v.ToString()));
+                {
+                    foreach (var asset in assets)
+                    {
+                        var lotStepSizeTuple = CommonUtilities.FromDecimal(asset.LotStepSize);
+                        var lotStepSize = new DecimalValue
+                        {
+                            Units = lotStepSizeTuple.Item1,
+                            Nanos = lotStepSizeTuple.Item2
+                        };
+
+                        var binanceAsset = new BinanceAsset
+                        {
+                            AssetType = asset.AssetType,
+                            BaseAsset = asset.BaseAsset,
+                            LotStepSize = lotStepSize
+                        };
+                        result.Assets.Add(binanceAsset);
+                    }
+                }
 
                 return result;
             }

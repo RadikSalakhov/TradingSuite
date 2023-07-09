@@ -1,7 +1,9 @@
-﻿namespace Assets.API.Abstraction
+﻿using Assets.API.Entites;
+
+namespace Assets.API.Abstraction
 {
     public interface IBinanceWorkerAPIService
     {
-        Task<IEnumerable<string>> GetBinanceAssets();
+        Task<IEnumerable<AssetEntity>> GetBinanceAssets();
     }
 }

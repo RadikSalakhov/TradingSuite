@@ -1,4 +1,5 @@
 ﻿using Binance.Domain.Common;
+using Binance.Domain.Entities;
 using Newtonsoft.Json;
 
 namespace Binance.Infrastructure.DTO
@@ -44,16 +45,24 @@ namespace Binance.Infrastructure.DTO
         [JsonProperty("isMarginTradingAllowed")]
         public bool IsMarginTradingAllowed { get; set; }
 
-        public bool IsSupported()
+        [JsonProperty("filters")]
+        public BinanceExchangeInfoSymbolFilterDTO[] Filters { get; set; }
+
+        public decimal GetLotStepSizeOrDefault()
         {
-            return
-                IcebergAllowed &&
-                OcoAllowed &&
-                QuoteOrderQtyMarketAllowed &&
-                AllowTrailingStop &&
-                CancelReplaceAllowed &&
-                IsSpotTradingAllowed &&
-                IsMarginTradingAllowed;
+            var lotSizeFilter = Filters?.Where(v => v.FilterType == "LOT_SIZE").FirstOrDefault();
+            return lotSizeFilter != null && lotSizeFilter.StepSize > 0m
+                ? lotSizeFilter.StepSize
+                : 1m;
+        }
+
+        public AssetEntity ToAssetEntity()
+        {
+            return new AssetEntity
+            {
+                BaseAsset = BaseAsset,
+                LotStepSize = GetLotStepSizeOrDefault()
+            };
         }
     }
 }

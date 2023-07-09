@@ -8,6 +8,7 @@ using Binance.Spot;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Binance.Infrastructure.Services
 {
@@ -55,32 +56,34 @@ namespace Binance.Infrastructure.Services
             }
         }
 
-        public async Task<IEnumerable<CryptoAsset>> GetAllSupportedCryptoAssets()
+        public async Task<IEnumerable<AssetEntity>> GetAllSupportedCryptoAssets()
         {
             try
             {
                 throwIfNotRegistered();
-
-                var resultList = new List<CryptoAsset>();
 
                 using var httpClient = getHttpClient();
 
                 var resultJson = await getMarket(httpClient).ExchangeInformation(permissions: "SPOT");
 
                 var exchangeInfo = JsonConvert.DeserializeObject<BinanceExchangeInfoDTO>(resultJson);
-                if (exchangeInfo != null && exchangeInfo.Symbols != null)
+                if (exchangeInfo == null || exchangeInfo.Symbols == null)
+                    return Array.Empty<AssetEntity>();
+
+                var resultListDict = new Dictionary<string, AssetEntity>();
+
+                foreach (var symbol in exchangeInfo.Symbols)
                 {
-                    foreach (var symbol in exchangeInfo.Symbols)
+                    if (symbol.QuoteAsset != CryptoAsset.USDT)
+                        continue;
+
+                    if (!resultListDict.ContainsKey(symbol.BaseAsset))
                     {
-                        if (symbol.QuoteAsset == CryptoAsset.USDT && symbol.IsSupported())
-                        {
-                            if (!resultList.Contains(symbol.BaseAsset))
-                                resultList.Add(symbol.BaseAsset);
-                        }
+                        resultListDict.Add(symbol.BaseAsset, symbol.ToAssetEntity());
                     }
                 }
 
-                return resultList;
+                return resultListDict.Values;
             }
             catch (BinanceClientException exp)
             {

@@ -25,7 +25,10 @@ namespace Assets.API.IntegrationEventHandlers
 
             var asset = _cacheService.Asset.GetByKeys(integrationEvent.AssetType, integrationEvent.BaseAsset);
             if (asset == null)
-                asset = new AssetEntity(integrationEvent.AssetType, integrationEvent.BaseAsset, integrationEvent.Price);
+            {
+                asset = new AssetEntity(integrationEvent.AssetType, integrationEvent.BaseAsset);
+                asset.PriceUSDT = integrationEvent.Price;
+            }
 
             asset.PriceUSDT = integrationEvent.Price;
 
