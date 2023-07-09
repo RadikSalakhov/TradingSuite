@@ -1,5 +1,5 @@
-﻿using Assets.API.Abstraction;
-using Assets.API.Entites;
+﻿using Assets.Application.Aggregates;
+using Assets.Application.Contracts;
 using EventBus.Abstraction;
 using Services.Common;
 using Services.Common.IntegrationEvents;
@@ -23,16 +23,13 @@ namespace Assets.API.IntegrationEventHandlers
             if (integrationEvent.QuoteAsset != CommonConstants.USDT)
                 return;
 
-            var asset = _cacheService.Asset.GetByKeys(integrationEvent.AssetType, integrationEvent.BaseAsset);
-            if (asset == null)
-            {
-                asset = new AssetEntity(integrationEvent.AssetType, integrationEvent.BaseAsset);
-                asset.PriceUSDT = integrationEvent.Price;
-            }
+            var assetAggregate = _cacheService.AssetAggregate.GetByKeys(integrationEvent.AssetType, integrationEvent.BaseAsset);
+            if (assetAggregate == null)
+                assetAggregate = AssetAggregate.Create(integrationEvent.AssetType, integrationEvent.BaseAsset);
 
-            asset.PriceUSDT = integrationEvent.Price;
+            assetAggregate.AssetPriceEntity.PriceUSDT = integrationEvent.Price;
 
-            await _cacheService.Asset.UpdateAsync(asset);
+            await _cacheService.AssetAggregate.UpdateAsync(assetAggregate);
         }
     }
 }

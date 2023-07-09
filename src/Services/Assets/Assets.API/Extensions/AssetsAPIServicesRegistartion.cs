@@ -1,8 +1,7 @@
-﻿using Assets.API.Abstraction;
-using Assets.API.Configuration;
+﻿using Assets.API.Configuration;
 using Assets.API.Infrastructure;
 using Assets.API.Services;
-using Microsoft.Extensions.Configuration;
+using Assets.Application.Contracts;
 using Microsoft.Extensions.Options;
 
 namespace Assets.API.Extensions

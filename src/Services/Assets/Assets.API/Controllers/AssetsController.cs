@@ -1,6 +1,6 @@
-﻿using Assets.API.Abstraction;
-using Assets.API.DTO;
-using Assets.API.Entites;
+﻿using Assets.API.DTO;
+using Assets.Application.Contracts;
+using Assets.Domain.Entites;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assets.API.Controllers
@@ -21,11 +21,11 @@ namespace Assets.API.Controllers
         [HttpGet("get-asset-price")]
         public async Task<ActionResult<AssetPriceDTO>> GetAssetPrice(string assetType, string baseAsset)
         {
-            var assetEntity = _cacheService.Asset.GetByKeys(assetType, baseAsset);
-            if (assetEntity == null)
+            var assetAggregate = _cacheService.AssetAggregate.GetByKeys(assetType, baseAsset);
+            if (assetAggregate == null)
                 return NotFound();
 
-            var dto = AssetPriceDTO.FromEntity(assetEntity);
+            var dto = AssetPriceDTO.FromEntity(assetAggregate.AssetPriceEntity);
 
             return Ok(dto);
         }
@@ -33,7 +33,7 @@ namespace Assets.API.Controllers
         [HttpGet("get-ema-cross")]
         public async Task<ActionResult<IEnumerable<EmaCrossDTO>>> GetEmaCross(string assetType, string baseAsset)
         {
-            var assetEntity = _cacheService.Asset.GetByKeys(assetType, baseAsset);
+            var assetEntity = _cacheService.AssetAggregate.GetByKeys(assetType, baseAsset);
             if (assetEntity == null)
                 return NotFound();
 

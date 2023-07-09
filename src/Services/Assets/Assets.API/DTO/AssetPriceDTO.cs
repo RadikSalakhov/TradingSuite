@@ -1,4 +1,4 @@
-﻿using Assets.API.Entites;
+﻿using Assets.Domain.Entites;
 using Services.Common;
 
 namespace Assets.API.DTO
@@ -21,12 +21,12 @@ namespace Assets.API.DTO
             Price = price;
         }
 
-        public static AssetPriceDTO FromEntity(AssetEntity asset)
+        public static AssetPriceDTO FromEntity(AssetPriceEntity assetPriceEntity)
         {
-            if (asset == null)
-                throw new ArgumentNullException(nameof(asset));
+            if (assetPriceEntity == null)
+                throw new ArgumentNullException(nameof(assetPriceEntity));
 
-            return new AssetPriceDTO(asset.AssetType, asset.BaseAsset, CommonConstants.USDT, asset.PriceUSDT);
+            return new AssetPriceDTO(assetPriceEntity.AssetType, assetPriceEntity.BaseAsset, CommonConstants.USDT, assetPriceEntity.PriceUSDT);
         }
     }
 }

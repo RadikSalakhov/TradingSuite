@@ -1,5 +1,4 @@
-﻿using Assets.API.Entites;
-using Services.Common;
+﻿using Assets.Domain.Entites;
 
 namespace Assets.API.DTO
 {

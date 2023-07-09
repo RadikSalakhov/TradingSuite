@@ -1,15 +1,15 @@
-﻿using Assets.API.Abstraction;
-using Assets.API.Services.CacheEntries;
+﻿using Assets.Application.Contracts;
+using Assets.Application.Contracts.CacheEntries;
 
 namespace Assets.API.Services
 {
     public class CacheService : ICacheService
     {
-        public AssetCacheEntry Asset { get; }
+        public AssetAggregateCacheEntry AssetAggregate { get; }
 
         public CacheService()
         {
-            Asset = new AssetCacheEntry();
+            AssetAggregate = new AssetAggregateCacheEntry();
         }
     }
 }

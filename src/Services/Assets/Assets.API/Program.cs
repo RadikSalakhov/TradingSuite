@@ -1,7 +1,7 @@
-using Assets.API.Abstraction;
 using Assets.API.Extensions;
 using Assets.API.IntegrationEventHandlers;
 using Assets.API.Services;
+using Assets.Application.Contracts;
 using EventBus.Abstraction;
 using Services.Common.Extensions;
 using Services.Common.IntegrationEvents;

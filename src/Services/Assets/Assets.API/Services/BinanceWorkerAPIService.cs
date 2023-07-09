@@ -1,5 +1,5 @@
-﻿using Assets.API.Abstraction;
-using Assets.API.Entites;
+﻿using Assets.Application.Contracts;
+using Assets.Domain.Entites;
 using Services.Common;
 
 namespace Assets.API.Services
