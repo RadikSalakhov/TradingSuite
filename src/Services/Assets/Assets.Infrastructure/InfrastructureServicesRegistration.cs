@@ -22,7 +22,7 @@ namespace Assets.Infrastructure
             services.AddGrpcClient<BinanceWorkerAPI.BinanceWorker.BinanceWorkerClient>(
                 (services, options) =>
                 {
-                    var url = services.GetRequiredService<IOptions<AssetsApiOptions>>().Value.BinanceWorkerApiGrpc;
+                    var url = services.GetRequiredService<IOptions<AssetsOptions>>().Value.BinanceWorkerApiGrpc;
                     options.Address = new Uri(url);
                 })
                 .AddInterceptor<GrpcExceptionInterceptor>();

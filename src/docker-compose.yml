@@ -26,13 +26,13 @@ services:
       - "15672:15672"
       - "5672:5672"    
 
-  assets-api:
+  assets-webapi:
     build:
       context: .
-      dockerfile: Services/Assets/Assets.API/Dockerfile
+      dockerfile: Services/Assets/Assets.WebApi/Dockerfile
     environment:
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - AssetsApiOptions__BinanceWorkerApiGrpc=http://binance-worker:90
+      - AssetsOptions__BinanceWorkerApiGrpc=http://binance-worker:90
     ports:
       - "6004:80"
     depends_on:

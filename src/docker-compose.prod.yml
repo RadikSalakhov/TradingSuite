@@ -7,8 +7,8 @@ services:
       context: .
       dockerfile: ApiGateways/EnvoyProd/Dockerfile    
 
-  assets-api:
-    image: radiksalakhov/assets-api:${PROD_VERSION}
+  assets-webapi:
+    image: radiksalakhov/assets-webapi:${PROD_VERSION}
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       

@@ -11,12 +11,20 @@ namespace Assets.Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<AssetsApiOptions>(configuration.GetSection(nameof(AssetsApiOptions)));
+            services.Configure<AssetsOptions>(configuration.GetSection(nameof(AssetsOptions)));
 
             services.AddSingleton<IIntegrationEventHandler<AssetPriceTickerIntegrationEvent>, AssetPriceTickerIntegrationEventHandler>();
             services.AddSingleton<IIntegrationEventHandler<IndicatorEmaCrossIntegrationEvent>, IndicatorEmaCrossIntegrationEventHandler>();
 
             return services;
+        }
+
+        public static IEventBus MapEventBus(this IEventBus eventBus)
+        {
+            eventBus.Subscribe<AssetPriceTickerIntegrationEvent, IIntegrationEventHandler<AssetPriceTickerIntegrationEvent>>();
+            eventBus.Subscribe<IndicatorEmaCrossIntegrationEvent, IIntegrationEventHandler<IndicatorEmaCrossIntegrationEvent>>();
+
+            return eventBus;
         }
     }
 }

@@ -49,7 +49,7 @@ static_resources:
                 route:                  
                   auto_host_rewrite: true
                   prefix_rewrite: "/api"
-                  cluster: assets-api-cluster
+                  cluster: assets-webapi-cluster
               - match:
                   prefix: "/hub"
                 route:
@@ -91,17 +91,17 @@ static_resources:
   #               address: rabbitmq
   #               #address: 'rabbitmq-service.default'
   #               port_value: 15672  
-  - name: assets-api-cluster
+  - name: assets-webapi-cluster
     type: LOGICAL_DNS    
     dns_lookup_family: V4_ONLY
     load_assignment:
-      cluster_name: assets-api-cluster
+      cluster_name: assets-webapi-cluster
       endpoints:
       - lb_endpoints:
         - endpoint:
             address:
               socket_address:                
-                address: 'assets-api-service.default'
+                address: 'assets-webapi-service.default'
                 port_value: 80
   - name: ticker-signalrhub-cluster
     type: LOGICAL_DNS    

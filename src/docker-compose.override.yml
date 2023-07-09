@@ -9,8 +9,8 @@ services:
     volumes:
       - ./ApiGateways/EnvoyDev/envoy.yaml:/etc/envoy/envoy.yaml
 
-  assets-api:
-    image: radiksalakhov/assets-api:latest
+  assets-webapi:
+    image: radiksalakhov/assets-webapi:latest
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       
