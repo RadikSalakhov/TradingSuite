@@ -32,7 +32,7 @@ services:
       dockerfile: Services/Assets/Assets.API/Dockerfile
     environment:
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - AssetsAPIOptions__BinanceWorkerApiGrpc=http://binance-worker:90
+      - AssetsApiOptions__BinanceWorkerApiGrpc=http://binance-worker:90
     ports:
       - "6004:80"
     depends_on:

@@ -1,7 +1,7 @@
 ﻿using Assets.Application.Contracts;
 using Assets.Application.Contracts.CacheEntries;
 
-namespace Assets.API.Services
+namespace Assets.Infrastructure.CacheServices
 {
     public class CacheService : ICacheService
     {

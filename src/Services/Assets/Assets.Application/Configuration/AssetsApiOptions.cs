@@ -1,6 +1,6 @@
-﻿namespace Assets.API.Configuration
+﻿namespace Assets.Application.Configuration
 {
-    public class AssetsAPIOptions
+    public class AssetsApiOptions
     {
         public string BinanceWorkerApiGrpc { get; set; } = string.Empty;
     }

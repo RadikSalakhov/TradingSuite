@@ -10,9 +10,9 @@ namespace Assets.API.Controllers
     public class AssetsController : ControllerBase
     {
         private readonly ICacheService _cacheService;
-        private readonly IBinanceWorkerAPIService _binanceWorkerAPIService;
+        private readonly IBinanceWorkerApiService _binanceWorkerAPIService;
 
-        public AssetsController(ICacheService cacheService, IBinanceWorkerAPIService binanceWorkerAPIService)
+        public AssetsController(ICacheService cacheService, IBinanceWorkerApiService binanceWorkerAPIService)
         {
             _cacheService = cacheService;
             _binanceWorkerAPIService = binanceWorkerAPIService;

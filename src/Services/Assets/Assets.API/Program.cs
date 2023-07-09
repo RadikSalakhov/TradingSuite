@@ -1,7 +1,5 @@
-using Assets.API.Extensions;
-using Assets.API.IntegrationEventHandlers;
-using Assets.API.Services;
-using Assets.Application.Contracts;
+using Assets.Application;
+using Assets.Infrastructure;
 using EventBus.Abstraction;
 using Services.Common.Extensions;
 using Services.Common.IntegrationEvents;
@@ -30,12 +28,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddGrpcServices(builder.Configuration);
-
-builder.Services.AddSingleton<IIntegrationEventHandler<AssetPriceTickerIntegrationEvent>, AssetPriceTickerIntegrationEventHandler>();
-builder.Services.AddSingleton<IIntegrationEventHandler<IndicatorEmaCrossIntegrationEvent>, IndicatorEmaCrossIntegrationEventHandler>();
-
-builder.Services.AddSingleton<ICacheService, CacheService>();
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 var app = builder.Build();
 

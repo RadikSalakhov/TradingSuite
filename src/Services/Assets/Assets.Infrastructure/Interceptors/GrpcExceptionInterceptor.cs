@@ -1,7 +1,8 @@
 ﻿using Grpc.Core;
 using Grpc.Core.Interceptors;
+using Microsoft.Extensions.Logging;
 
-namespace Assets.API.Infrastructure
+namespace Assets.Infrastructure.Interceptors
 {
     public class GrpcExceptionInterceptor : Interceptor
     {

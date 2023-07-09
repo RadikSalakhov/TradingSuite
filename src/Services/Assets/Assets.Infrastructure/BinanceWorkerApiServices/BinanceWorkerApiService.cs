@@ -2,13 +2,13 @@
 using Assets.Domain.Entites;
 using Services.Common;
 
-namespace Assets.API.Services
+namespace Assets.Infrastructure.BinanceWorkerApiServices
 {
-    public class BinanceWorkerAPIService : IBinanceWorkerAPIService
+    public class BinanceWorkerApiService : IBinanceWorkerApiService
     {
         private BinanceWorkerAPI.BinanceWorker.BinanceWorkerClient _client;
 
-        public BinanceWorkerAPIService(BinanceWorkerAPI.BinanceWorker.BinanceWorkerClient client)
+        public BinanceWorkerApiService(BinanceWorkerAPI.BinanceWorker.BinanceWorkerClient client)
         {
             _client = client;
         }
