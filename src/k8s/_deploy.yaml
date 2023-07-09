@@ -92,38 +92,38 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: assets-api-service
+  name: assets-webapi-service
 spec:
   selector:
-    app: assets-api
+    app: assets-webapi
   type: ClusterIP
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
-      name: assets-api-port-http
+      name: assets-webapi-port-http
     # - protocol: TCP
     #   port: 443
     #   targetPort: 443
-    #   name: assets-api-port-https
+    #   name: assets-webapi-port-https
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: assets-api-deployment
+  name: assets-webapi-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: assets-api
+      app: assets-webapi
   template:
     metadata:
       labels:
-        app: assets-api
+        app: assets-webapi
     spec:
       containers:
-        - name: assets-api
-          image: radiksalakhov/assets-api:1.0.0.0
+        - name: assets-webapi
+          image: radiksalakhov/assets-webapi:1.0.0.0
           imagePullPolicy: Always
           env:
             - name: ASPNETCORE_ENVIRONMENT
