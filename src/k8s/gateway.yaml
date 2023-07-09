@@ -15,7 +15,11 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-      name: gateway-admin-port    
+      name: gateway-admin-port
+    # - protocol: TCP
+    #   port: 1433
+    #   targetPort: 1433
+    #   name: sql-server-port
 ---
 apiVersion: apps/v1
 kind: Deployment

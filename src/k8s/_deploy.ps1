@@ -23,9 +23,9 @@ Get-Content gateway.yaml | Add-Content $target_file
 (Get-Content $target_file).replace('{PROD_VERSION}',$PROD_VERSION) | Set-Content $target_file
 
 if($args[0] -eq "apply"){
-    kubectl apply -f="environment.yaml" -f="rabbitmq.yaml" -f="$target_file"
+    kubectl apply -f="environment.yaml" -f='sql-server.yaml' -f="rabbitmq.yaml" -f="$target_file"
 }
 
 if($args[0] -eq "delete"){
-    kubectl delete -f="environment.yaml" -f="rabbitmq.yaml" -f="$target_file"
+    kubectl delete -f="environment.yaml" -f='sql-server.yaml' -f="rabbitmq.yaml" -f="$target_file"
 }
