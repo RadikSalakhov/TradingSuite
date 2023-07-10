@@ -1,8 +1,10 @@
 using Assets.Application;
 using Assets.Infrastructure;
+using Assets.Persistence;
+using Assets.Persistence.Contexts;
 using EventBus.Abstraction;
+using Microsoft.EntityFrameworkCore;
 using Services.Common.Extensions;
-using Services.Common.IntegrationEvents;
 
 var corsPolicyName = "assets-api-cors-policy";
 
@@ -26,10 +28,16 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
+});
+
 builder.Services.AddServiceDefaults(builder.Configuration);
 
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddPersistenceServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -50,5 +58,12 @@ app.MapControllers();
 
 var eventBus = app.Services.GetRequiredService<IEventBus>();
 eventBus.MapEventBus();
+
+//Apply last migrations
+using (var scope = app.Services.CreateScope())
+{
+    var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+    dataContext.Database.Migrate();
+}
 
 app.Run();

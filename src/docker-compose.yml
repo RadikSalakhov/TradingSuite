@@ -32,6 +32,7 @@ services:
       dockerfile: Services/Assets/Assets.WebApi/Dockerfile
     environment:
       - ASPNETCORE_URLS=http://0.0.0.0:80
+      - ConnectionStrings__SqlServer=server=sql-server;database=tradingsuite;User Id=sa;Password=DevPassword1!;TrustServerCertificate=True
       - AssetsOptions__BinanceWorkerApiGrpc=http://binance-worker:90
     ports:
       - "6004:80"

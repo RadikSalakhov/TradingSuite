@@ -1,6 +1,9 @@
-﻿namespace Assets.Domain.Entites
+﻿using Assets.Domain.Base;
+using Assets.Domain.Keys;
+
+namespace Assets.Domain.Entites
 {
-    public class AssetEntity
+    public class AssetEntity : BaseEntity<AssetKey>
     {
         public string AssetType { get; }
 
@@ -12,6 +15,11 @@
         {
             AssetType = assetType;
             BaseAsset = baseAsset;
+        }
+
+        public override AssetKey GetKey()
+        {
+            return new AssetKey(AssetType, BaseAsset);
         }
     }
 }
