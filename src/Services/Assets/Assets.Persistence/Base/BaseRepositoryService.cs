@@ -65,13 +65,11 @@ namespace Assets.Persistence.Base
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            var key = entity.GetKey();
-
-            if (key == null || !key.IsValid())
+            if (entity.Key == null || !entity.Key.IsValid())
                 throw new ArgumentException("Key is not valid");
 
             var query = DbSet.AsQueryable();
-            query = ApplyFilterByKey(query, key);
+            query = ApplyFilterByKey(query, entity.Key);
 
             var record = await query.FirstOrDefaultAsync();
             if (record == null)
@@ -87,7 +85,7 @@ namespace Assets.Persistence.Base
 
             Context.SaveChanges();
 
-            return await GetByKey(key);
+            return await GetByKey(record.GetKey());
         }
     }
 }

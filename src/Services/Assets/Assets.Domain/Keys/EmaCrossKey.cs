@@ -2,22 +2,26 @@
 
 namespace Assets.Domain.Keys
 {
-    public class AssetKey : BaseKey
+    public class EmaCrossKey : BaseKey
     {
         public string AssetType { get; private set; }
 
         public string BaseAsset { get; private set; }
 
-        public AssetKey(string assetType, string baseAsset)
+        public string Interval { get; private set; }
+
+        public EmaCrossKey(string assetType, string baseAsset, string interval)
         {
             AssetType = assetType;
             BaseAsset = baseAsset;
+            Interval = interval;
         }
 
         public override bool IsValid()
         {
             return !string.IsNullOrWhiteSpace(AssetType)
-                && !string.IsNullOrWhiteSpace(BaseAsset);
+                && !string.IsNullOrWhiteSpace(BaseAsset)
+                && !string.IsNullOrWhiteSpace(Interval);
         }
     }
 }

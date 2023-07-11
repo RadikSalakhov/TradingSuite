@@ -1,12 +1,15 @@
-﻿namespace Assets.Domain.Entites
+﻿using Assets.Domain.Base;
+using Assets.Domain.Keys;
+
+namespace Assets.Domain.Entites
 {
-    public class EmaCrossEntity
+    public class EmaCrossEntity : BaseEntity<EmaCrossKey>
     {
-        public string AssetType { get; }
+        public string AssetType => Key.AssetType;
 
-        public string BaseAsset { get; }
+        public string BaseAsset => Key.BaseAsset;
 
-        public string Interval { get; }
+        public string Interval => Key.Interval;
 
         public decimal ValueShort { get; set; }
 
@@ -16,20 +19,14 @@
 
         public decimal PrevValueLong { get; set; }
 
-        public EmaCrossEntity(string assetType, string baseAsset, string interval)
-            : this(assetType, baseAsset, interval, 0m, 0m, 0m, 0m)
+        public EmaCrossEntity(EmaCrossKey key)
+            : base(key)
         {
         }
 
-        public EmaCrossEntity(string assetType, string baseAsset, string interval, decimal valueShort, decimal valueLong, decimal prevValueShort, decimal prevValueLong)
+        public static EmaCrossEntity Create(string assetType, string baseAsset, string interval)
         {
-            AssetType = assetType;
-            BaseAsset = baseAsset;
-            Interval = interval;
-            ValueShort = valueShort;
-            ValueLong = valueLong;
-            PrevValueShort = prevValueShort;
-            PrevValueLong = prevValueLong;
+            return new EmaCrossEntity(new EmaCrossKey(assetType, baseAsset, interval));
         }
     }
 }

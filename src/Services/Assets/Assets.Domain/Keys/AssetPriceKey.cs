@@ -2,13 +2,13 @@
 
 namespace Assets.Domain.Keys
 {
-    public class AssetKey : BaseKey
+    public class AssetPriceKey : BaseKey
     {
         public string AssetType { get; private set; }
 
         public string BaseAsset { get; private set; }
 
-        public AssetKey(string assetType, string baseAsset)
+        public AssetPriceKey(string assetType, string baseAsset)
         {
             AssetType = assetType;
             BaseAsset = baseAsset;

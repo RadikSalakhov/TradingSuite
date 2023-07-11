@@ -37,10 +37,8 @@ namespace Assets.Persistence.DBModels
 
         public override AssetEntity ToEntity()
         {
-            var entity = new AssetEntity(AssetType, BaseAsset)
-            {
-                LotStepSize = LotStepSize
-            };
+            var entity = AssetEntity.Create(AssetType, BaseAsset);
+            entity.LotStepSize = LotStepSize;
 
             return entity;
         }

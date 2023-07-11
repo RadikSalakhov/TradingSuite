@@ -23,7 +23,7 @@ namespace Assets.Infrastructure.BinanceWorkerApiServices
 
             foreach (var binanceAsset in response.Assets)
             {
-                var asset = new AssetEntity(binanceAsset.AssetType, binanceAsset.BaseAsset);
+                var asset = AssetEntity.Create(binanceAsset.AssetType, binanceAsset.BaseAsset);
                 asset.LotStepSize = CommonUtilities.ToDecimal(binanceAsset.LotStepSize.Units, binanceAsset.LotStepSize.Nanos);
                 result.Add(asset);
             }

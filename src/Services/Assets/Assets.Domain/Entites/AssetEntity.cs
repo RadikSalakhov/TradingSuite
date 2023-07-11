@@ -5,21 +5,20 @@ namespace Assets.Domain.Entites
 {
     public class AssetEntity : BaseEntity<AssetKey>
     {
-        public string AssetType { get; }
+        public string AssetType => Key.AssetType;
 
-        public string BaseAsset { get; }
+        public string BaseAsset => Key.BaseAsset;
 
         public decimal LotStepSize { get; set; }
 
-        public AssetEntity(string assetType, string baseAsset)
+        public AssetEntity(AssetKey key)
+            : base(key)
         {
-            AssetType = assetType;
-            BaseAsset = baseAsset;
         }
 
-        public override AssetKey GetKey()
+        public static AssetEntity Create(string assetType, string baseAsset)
         {
-            return new AssetKey(AssetType, BaseAsset);
+            return new AssetEntity(new AssetKey(assetType, baseAsset));
         }
     }
 }

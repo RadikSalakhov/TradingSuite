@@ -38,7 +38,7 @@ namespace Assets.Application.Aggregates
             {
                 if (!_emaCrossDict.TryGetValue(interval, out EmaCrossEntity? emaCross))
                 {
-                    emaCross = new EmaCrossEntity(AssetEntity.AssetType, AssetEntity.BaseAsset, interval);
+                    emaCross = EmaCrossEntity.Create(AssetEntity.AssetType, AssetEntity.BaseAsset, interval);
                     _emaCrossDict.Add(interval, emaCross);
                 }
 
@@ -51,8 +51,8 @@ namespace Assets.Application.Aggregates
 
         public static AssetAggregate Create(string assetType, string baseAsset)
         {
-            var asset = new AssetEntity(assetType, baseAsset);
-            var assetPrice = new AssetPriceEntity(assetType, baseAsset);
+            var asset = AssetEntity.Create(assetType, baseAsset);
+            var assetPrice = AssetPriceEntity.Create(assetType, baseAsset);
 
             return new AssetAggregate(asset, assetPrice);
         }
