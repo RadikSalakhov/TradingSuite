@@ -1,10 +1,6 @@
 # Trading Suite
 A simple system for convenient trading, based on a microservices architecture and Docker containers.
 
-## Live Demo
-
-The current stable version is available to [hier](http://demo.salakhov.net)
-
 ## Current State (the system is under development)
 
  - Only Cryptocurrencies from Binance platform are supported
